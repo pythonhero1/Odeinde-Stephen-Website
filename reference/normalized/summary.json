@@ -1,0 +1,274 @@
+{
+  "generated_at": "2026-10-22T14:03:40.842Z",
+  "interpretation": "Source exports only; verify the live CMS separately.",
+  "page_exports": 8,
+  "parser_errors": 0,
+  "unique_embedded_assets_by_sha256": 78,
+  "unique_asset_bytes": 10823738,
+  "embedded_image_records": 124,
+  "page_summaries": [
+    {
+      "source": "Business Website Development(1).json",
+      "source_sha256": "ac9b9c31ac306b37c443441dfbef58d88550e999da1e110ffa960d0656b5feda",
+      "source_ids": [
+        "96116"
+      ],
+      "blocks": 424,
+      "headings": 66,
+      "sections": 13,
+      "buttons": 22,
+      "embedded_images": 34,
+      "forms": 0,
+      "dynamic_values": 8,
+      "issues": 2,
+      "links": [
+        "#portfolio",
+        "$variable({\"type\":\"content\",\"value\":{\"name\":\"loop_post_link\",\"settings\":{\"before\":\"\",\"after\":\"\",\"loop_position\":\"\",\"text\":\"post_title\",\"custom_text\":\"\"}}})$",
+        "/business-website-development/",
+        "/client-portals-business-systems/",
+        "/contact/",
+        "/e-commerce-development/",
+        "/insights/",
+        "/portfolio/",
+        "/pricing/",
+        "/shopify-development/",
+        "/website-redesign/",
+        "/woocommerce-development/",
+        "/wordpress-development/",
+        "https://cal.com/oderinde/free",
+        "https://oderindestephen.com/",
+        "https://oderindestephen.com/business-website-solutions/"
+      ],
+      "detail": "reference/normalized/business-website-development-1.json"
+    },
+    {
+      "source": "Business Website Solutions (1).json",
+      "source_sha256": "72e39e95b2185bc0fb8ecb6e4201adab293bfce00baf1c3edf0ac2e3a1491814",
+      "source_ids": [
+        "96112"
+      ],
+      "blocks": 281,
+      "headings": 40,
+      "sections": 11,
+      "buttons": 17,
+      "embedded_images": 21,
+      "forms": 0,
+      "dynamic_values": 7,
+      "issues": 4,
+      "links": [
+        "#diagnostic",
+        "#solution-paths",
+        "$variable({\"type\":\"content\",\"value\":{\"name\":\"loop_post_link\",\"settings\":{\"before\":\"\",\"after\":\"\",\"loop_position\":\"\",\"text\":\"post_title\",\"custom_text\":\"\"}}})$",
+        "/business-website-development/",
+        "/client-portals-business-systems/",
+        "/contact/",
+        "/e-commerce-development/",
+        "/portfolio/",
+        "/pricing/",
+        "/shopify-development/",
+        "/website-redesign/",
+        "/woocommerce-development/",
+        "/wordpress-development/"
+      ],
+      "detail": "reference/normalized/business-website-solutions-1.json"
+    },
+    {
+      "source": "Case Studies.json",
+      "source_sha256": "ff01e94718bf875aa7127fdf3c59af3a3c760e50799d03b2417b3c5ab8fde4e0",
+      "source_ids": [
+        "96083"
+      ],
+      "blocks": 218,
+      "headings": 41,
+      "sections": 8,
+      "buttons": 15,
+      "embedded_images": 8,
+      "forms": 0,
+      "dynamic_values": 14,
+      "issues": 0,
+      "links": [
+        "#diagnostic",
+        "#solution-paths",
+        "$variable({\"type\":\"content\",\"value\":{\"name\":\"loop_post_link\",\"settings\":{\"before\":\"\",\"after\":\"\",\"loop_position\":\"\",\"text\":\"post_title\",\"custom_text\":\"\"}}})$",
+        "/",
+        "/business-website-development/",
+        "/business-website-solutions/",
+        "/case-studies/",
+        "/portfolio/",
+        "https://cal.com/oderinde/free",
+        "https://clutch.co/profile/oderinde-stephen",
+        "https://oderindestephen.com/",
+        "https://oderindestephen.com/business-website-development/",
+        "https://oderindestephen.com/business-website-solutions/",
+        "https://oderindestephen.com/case-studies/",
+        "https://oderindestephen.com/contact/",
+        "https://oderindestephen.com/e-commerce-development/",
+        "https://oderindestephen.com/portfolio/",
+        "https://share.google/vDGgZ0FrAHvVTa31h",
+        "https://www.trustpilot.com/review/oderindestephen.com"
+      ],
+      "detail": "reference/normalized/case-studies.json"
+    },
+    {
+      "source": "Contact.json",
+      "source_sha256": "e985f0bfba999f17693ee8a0eccc9e74af1ee2390f16c949b338242293873bed",
+      "source_ids": [
+        "96339"
+      ],
+      "blocks": 208,
+      "headings": 36,
+      "sections": 8,
+      "buttons": 22,
+      "embedded_images": 4,
+      "forms": 1,
+      "dynamic_values": 3,
+      "issues": 5,
+      "links": [
+        "#portfolio",
+        "/",
+        "/business-website-development/",
+        "/business-website-solutions/",
+        "/case-studies/",
+        "/contact/",
+        "/e-commerce-development/",
+        "/portfolio/",
+        "https://cal.com/oderinde/free",
+        "https://oderindestephen.com/",
+        "https://oderindestephen.com/business-website-development/",
+        "https://oderindestephen.com/business-website-solutions/",
+        "https://oderindestephen.com/case-studies/",
+        "https://oderindestephen.com/e-commerce-development/",
+        "https://oderindestephen.com/portfolio/",
+        "https://www.google.com/search?kgmid=/g/11zzmz2_dk&hl=en-GB&q=Oderinde+Stephen+Web+%26+Digital+Solutions",
+        "https://www.linkedin.com/in/pythonhero/",
+        "mailto:Contact@oderindestephen.com",
+        "tel:+447848149224"
+      ],
+      "detail": "reference/normalized/contact.json"
+    },
+    {
+      "source": "E-commerce Development(1).json",
+      "source_sha256": "95baa09862442b2ea0a81165294743c5e0dc9286b35fd5d6bc8ec949fb9e9a9a",
+      "source_ids": [
+        "96119"
+      ],
+      "blocks": 330,
+      "headings": 52,
+      "sections": 13,
+      "buttons": 13,
+      "embedded_images": 1,
+      "forms": 0,
+      "dynamic_values": 0,
+      "issues": 1,
+      "links": [
+        "#portfolio",
+        "/contact/",
+        "/insights/",
+        "/portfolio/",
+        "/shopify-development/",
+        "/woocommerce-development/"
+      ],
+      "detail": "reference/normalized/e-commerce-development-1.json"
+    },
+    {
+      "source": "Pipe Patch Pro WordPress Product Website Development.json",
+      "source_sha256": "97adab82ce31a4052c90cb01b58ab182a6ccf3b2d8c8f65a6b52d8f41a6d57d2",
+      "source_ids": [
+        "96182"
+      ],
+      "blocks": 274,
+      "headings": 78,
+      "sections": 11,
+      "buttons": 4,
+      "embedded_images": 0,
+      "forms": 0,
+      "dynamic_values": 0,
+      "issues": 0,
+      "links": [
+        "/contact/",
+        "/insights/",
+        "/solutions/",
+        "https://www.pipepatchpro.net/"
+      ],
+      "detail": "reference/normalized/pipe-patch-pro-wordpress-product-website-development.json"
+    },
+    {
+      "source": "Pricing.json",
+      "source_sha256": "3a0f66d8cf7e8f11cd4221b8a861c71e40f6c8cecd8c8c4717dafd7f74c22e7f",
+      "source_ids": [
+        "96380"
+      ],
+      "blocks": 265,
+      "headings": 50,
+      "sections": 9,
+      "buttons": 15,
+      "embedded_images": 12,
+      "forms": 0,
+      "dynamic_values": 5,
+      "issues": 4,
+      "links": [
+        "#portfolio",
+        "/contact/",
+        "https://cal.com/oderinde/free",
+        "https://oderindestephen.com/",
+        "https://oderindestephen.com/business-website-development/",
+        "https://oderindestephen.com/business-website-solutions/"
+      ],
+      "detail": "reference/normalized/pricing.json"
+    },
+    {
+      "source": "Website Development & Digital Solutions _ Oderinde Stephen.json",
+      "source_sha256": "80b4b883f8ef43b5b3a898a6f45e303947829143340eb8be288a1c07d1c07761",
+      "source_ids": [
+        "14"
+      ],
+      "blocks": 469,
+      "headings": 95,
+      "sections": 13,
+      "buttons": 15,
+      "embedded_images": 44,
+      "forms": 0,
+      "dynamic_values": 16,
+      "issues": 12,
+      "links": [
+        "$variable({\"type\":\"content\",\"value\":{\"name\":\"loop_post_link\",\"settings\":{\"before\":\"\",\"after\":\"\",\"loop_position\":\"\",\"text\":\"post_title\",\"custom_text\":\"\"}}})$",
+        "/contact/",
+        "/pricing/",
+        "https://cal.com/oderinde/free",
+        "https://clutch.co/profile/oderinde-stephen",
+        "https://oderindestephen.com/business-website-solutions/",
+        "https://portal.oderindestephen.com/",
+        "https://share.google/vDGgZ0FrAHvVTa31h",
+        "https://www.trustpilot.com/review/oderindestephen.com"
+      ],
+      "detail": "reference/normalized/website-development-digital-solutions-oderinde-stephen.json"
+    }
+  ],
+  "internal_link_candidates": [
+    "/",
+    "/business-website-development/",
+    "/business-website-solutions/",
+    "/case-studies/",
+    "/client-portals-business-systems/",
+    "/contact/",
+    "/e-commerce-development/",
+    "/insights/",
+    "/portfolio/",
+    "/pricing/",
+    "/shopify-development/",
+    "/solutions/",
+    "/website-redesign/",
+    "/woocommerce-development/",
+    "/wordpress-development/",
+    "https://oderindestephen.com/",
+    "https://oderindestephen.com/business-website-development/",
+    "https://oderindestephen.com/business-website-solutions/",
+    "https://oderindestephen.com/case-studies/",
+    "https://oderindestephen.com/contact/",
+    "https://oderindestephen.com/e-commerce-development/",
+    "https://oderindestephen.com/portfolio/"
+  ],
+  "booking_urls_found": [
+    "https://cal.com/oderinde/free"
+  ]
+}

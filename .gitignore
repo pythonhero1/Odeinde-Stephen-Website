@@ -1,0 +1,53 @@
+# Runtime, dependency, editor and build output
+node_modules/
+.next/
+out/
+coverage/
+playwright-report/
+test-results/
+.vercel/
+.antigravity/
+.gemini/
+.vscode/
+.idea/
+__pycache__/
+*.pyc
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Secrets and full private exports/backups
+.env
+.env.*
+!.env.example
+*.env
+*.sql
+*.sql.gz
+*.wpress
+*.zip
+*.pem
+*.key
+*credentials*.json
+*token*.json
+private/
+backups/
+
+# Original local reference exports and decoded reference assets stay in this kit,
+# not in ordinary source commits. Track only curated public production assets.
+reference/divi/
+reference/assets/
+reference/wordpress/
+*.xml
+
+# WordPress core and installed third-party code are not source for this repo.
+wordpress/wp-admin/
+wordpress/wp-includes/
+wordpress/wp-content/uploads/
+wordpress/wp-config.php
+
+# Agent rules are source; exclude unrelated per-agent state.
+.agents/*
+!.agents/rules/
+
+# Track the project plugin, ACF schema, approved public migration data and plans.
+# Do not ignore apps/web, wordpress/plugins/oderinde-headless or wordpress/acf-json.

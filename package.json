@@ -1,0 +1,21 @@
+{
+  "name": "oderindestephen-headless",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Headless marketing website for Oderinde Stephen",
+  "workspaces": [
+    "apps/*"
+  ],
+  "scripts": {
+    "dev": "npm.cmd --prefix apps/web run dev",
+    "build": "npm.cmd --prefix apps/web run build",
+    "start": "npm.cmd --prefix apps/web run start",
+    "lint": "npm.cmd --prefix apps/web run lint",
+    "kit:check": "node tools/check-kit.mjs",
+    "memory:check": "py -3 tools/check-memory.py"
+  },
+  "engines": {
+    "node": ">=20.0.0",
+    "npm": ">=10.0.0"
+  }
+}
