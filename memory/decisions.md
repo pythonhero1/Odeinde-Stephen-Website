@@ -85,3 +85,10 @@ Confirmed facts and clearly marked proposals from this planning session. No impl
 - Applies to: Marketing CTAs, resource landing links, and lead magnets.
 - Status: active
 - Date: 2026-10-22
+
+### D-13 - Continuous GitHub push upon Stephen confirmation
+- Decision: Link remote repository https://github.com/pythonhero1/Odeinde-Stephen-Website.git and push verified commits each time Stephen tests and confirms an implementation with "tested and working".
+- Rejected: Waiting until Phase 07 for the first GitHub release.
+- Applies to: Repository remote, delivery workflow, and version control.
+- Status: active
+- Date: 2026-10-22

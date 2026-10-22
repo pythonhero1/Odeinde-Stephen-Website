@@ -19,3 +19,9 @@ Conventions from the project brief, existing project baseline and inspected sour
 - Applies when: Mapping Divi content, assessing functionality or writing implementation evidence.
 - Example: docs/source-audit.md and reference/normalized/summary.json.
 - Date: 2026-10-22
+
+### P-4 - Push to GitHub on Stephen tested confirmation
+- Rule: Push verified commits to remote origin (https://github.com/pythonhero1/Odeinde-Stephen-Website.git) whenever Stephen tests and confirms an implementation with "tested and working".
+- Applies when: Stephen confirms an implemented task or phase.
+- Example: D-13, git push -u origin main.
+- Date: 2026-10-22
