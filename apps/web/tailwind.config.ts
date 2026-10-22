@@ -23,8 +23,8 @@ const config: Config = {
         },
       },
       fontFamily: {
-        sans: ["var(--font-inter)", "sans-serif"],
-        heading: ["var(--font-work-sans)", "sans-serif"],
+        sans: ["var(--font-work-sans)", "sans-serif"],
+        heading: ["var(--font-inter)", "sans-serif"],
         mono: ["var(--font-space-mono)", "monospace"],
       },
     },

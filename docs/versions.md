@@ -9,7 +9,8 @@ Prepared 22 October 2026. Recorded for Phase 01 repository setup.
 | **Node.js** | `v24.20.0` | Active LTS |
 | **npm** | `11.19.0` | Invoked via `npm.cmd` due to execution policy |
 | **Git** | `2.56.0.windows.2` | Single repo: `oderindestephen-headless` |
-| **Python** | `3.12.7` | Used for `tools/check-memory.py` |
+| **Python** | `3.12.10` | Used for `tools/check-memory.py` |
+| **LocalWP** | `10.2.0` | Local WordPress runtime at `$env:LOCALAPPDATA\Programs\Local` |
 
 ## 2. Frontend Dependencies (`apps/web`)
 | Package | Resolved Version | Purpose |
@@ -19,6 +20,8 @@ Prepared 22 October 2026. Recorded for Phase 01 repository setup.
 | `react-dom` | `19.3.1` | React DOM |
 | `tailwindcss` | `3.4.19` | Utility-first styling with dark/blue brand tokens |
 | `typescript` | `5.9.3` | Static typing with strict checks |
+| `eslint` | `9.21.0` | Code quality and linting |
+| `eslint-config-next` | `15.1.7` | Next.js core web vitals ESLint rules |
 | `clsx` | `2.1.1` | Class name composition |
 | `tailwind-merge` | `3.0.2` | Tailwind conflict resolution |
 | `lucide-react` | `0.475.0` | UI icon library |

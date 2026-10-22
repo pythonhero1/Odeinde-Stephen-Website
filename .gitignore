@@ -5,7 +5,10 @@ out/
 coverage/
 playwright-report/
 test-results/
+*.tsbuildinfo
 .vercel/
+.wrangler/
+.mf/
 .antigravity/
 .gemini/
 .vscode/
@@ -25,6 +28,10 @@ desktop.ini
 *.sql.gz
 *.wpress
 *.zip
+*.tar
+*.tar.gz
+*.tgz
+*.7z
 *.pem
 *.key
 *credentials*.json

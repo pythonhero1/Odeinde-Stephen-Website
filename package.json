@@ -11,6 +11,9 @@
     "build": "npm.cmd --prefix apps/web run build",
     "start": "npm.cmd --prefix apps/web run start",
     "lint": "npm.cmd --prefix apps/web run lint",
+    "typecheck": "npm.cmd --prefix apps/web run typecheck",
+    "test": "npm.cmd --prefix apps/web run test",
+    "test:e2e": "npm.cmd --prefix apps/web run test:e2e",
     "kit:check": "node tools/check-kit.mjs",
     "memory:check": "py -3 tools/check-memory.py"
   },

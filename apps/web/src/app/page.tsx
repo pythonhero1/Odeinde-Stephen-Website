@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { ArrowRight, CheckCircle2, Calendar, Shield } from "lucide-react";
+import { DEFAULT_SITE_SETTINGS } from "@/lib/cms/cache";
 
 export default function HomePage() {
   return (
@@ -21,7 +22,7 @@ export default function HomePage() {
 
       <div className="flex flex-col sm:flex-row gap-4 mb-16">
         <a
-          href="https://cal.com/oderinde/free"
+          href={DEFAULT_SITE_SETTINGS.bookingUrl}
           target="_blank"
           rel="noopener noreferrer"
           className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-lg bg-brand-accent hover:bg-brand-accentHover text-white font-medium text-sm transition-colors shadow-lg shadow-blue-500/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-accent"

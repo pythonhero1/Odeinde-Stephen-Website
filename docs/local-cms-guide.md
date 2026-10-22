@@ -1,26 +1,23 @@
 # Local WordPress CMS Setup Guide
 
-This guide describes how to run a local WordPress development instance on Windows using the reference XML export (`reference/wordpress/oderindestephen.WordPress.2026-10-22.xml`).
+This guide describes how to run a local WordPress development instance on Windows using LocalWP (installed at `C:\Users\Pythonhero\AppData\Local\Programs\Local\Local.exe`) and the reference XML export (`reference/wordpress/oderindestephen.WordPress.2026-10-22.xml`).
 
 ---
 
-## 1. Local WordPress Options
+## 1. LocalWP Environment (Installed)
 
-Choose either of the following standard Windows local WordPress setups:
+LocalWP v10.2.0 is installed on this system.
 
-### Option A: LocalWP (Recommended)
-1. Download and open **Local** (formerly Local by Flywheel) on Windows.
+1. Launch **Local** from Windows Start Menu or execute:
+   ```powershell
+   & "$env:LOCALAPPDATA\Programs\Local\Local.exe"
+   ```
 2. Create a new site:
    * **Site name:** `oderinde-cms`
-   * **Environment:** Preferred (PHP 8.2+, MySQL 8.0, NGINX)
-   * **Local domain:** `http://oderinde-cms.local`
-3. Click **Start Site** and navigate to WP Admin.
-
-### Option B: Docker / WP-CLI
-```powershell
-# Using docker-compose or wp-env
-npx wp-env start
-```
+   * **Environment:** Preferred (PHP 8.2+, MySQL 8.0/8.4, NGINX)
+   * **Local domain:** `http://oderinde-cms.local` (or `https://oderinde-cms.local`)
+3. Click **Trust** next to the SSL certificate in Local to trust local HTTPS.
+4. Click **Start Site** and open **WP Admin**.
 
 ---
 
@@ -50,15 +47,22 @@ npx wp-env start
    * Create a user with role **Editor** (e.g. `headless_preview`).
    * Generate an **Application Password** under User Profile.
    * Place the credentials into `apps/web/.env.local` (never commit this file).
-4. **Prevent Outbound Mail:**
-   * Install a mail-catcher plugin (e.g., *WP Mail Logging* or *MailHog*) to ensure test form submissions never send real emails to live clients during local testing.
+4. **Outbound Mail Safety:**
+   * LocalWP includes built-in Mailpit (`lightning-services/mailpit`) to catch all outgoing email.
+   * Verify all emails appear in Local's "Tools $\rightarrow$ Mailpit" tab rather than sending live emails.
 
 ---
 
-## 4. Connecting `apps/web` to Local CMS
+## 4. Connecting `apps/web` to Local CMS & Verification
 
 Update `apps/web/.env.local`:
 ```bash
-WP_API_ORIGIN=http://oderinde-cms.local
+WP_API_ORIGIN=https://oderinde-cms.local
 # or http://localhost:8080 depending on your local web server port
 ```
+
+Verify runtime endpoint:
+```powershell
+curl -I -k https://oderinde-cms.local/wp-json/wp/v2/pages
+```
+Expected response: `HTTP/1.1 200 OK` with JSON array containing the 7 published pages.

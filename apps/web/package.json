@@ -7,6 +7,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "typecheck": "tsc --noEmit",
+    "test": "node --no-warnings --test --experimental-strip-types \"src/**/*.test.ts\"",
+    "test:e2e": "echo \"Playwright E2E suite will run against local CMS in Phase 06\" && exit 0",
     "pages:build": "npx @cloudflare/next-on-pages"
   },
   "dependencies": {
