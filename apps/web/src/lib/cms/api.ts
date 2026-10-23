@@ -2,9 +2,11 @@ import {
   SiteSettingsSchema,
   PathResolverSchema,
   CaseStudySchema,
+  PageSchema,
   type SiteSettings,
   type PathResolution,
   type CaseStudy,
+  type Page,
   type CmsEnquiryPayload,
 } from "./schema.ts";
 import { CMS_CACHE_TAGS, DEFAULT_SITE_SETTINGS, getCmsFetchOptions } from "./cache.ts";
@@ -87,14 +89,49 @@ export async function getCaseStudies(): Promise<CaseStudy[]> {
   }
 }
 
+async function isDraftModeEnabled(): Promise<boolean> {
+  try {
+    const { draftMode } = await import("next/headers");
+    const draft = await draftMode();
+    return draft.isEnabled;
+  } catch {
+    return false;
+  }
+}
+
 /**
  * Fetch a single case study by its slug.
  */
 export async function getCaseStudyBySlug(slug: string): Promise<CaseStudy | null> {
   try {
+    const isDraft = await isDraftModeEnabled();
+
+    if (isDraft) {
+      const timestamp = Math.floor(Date.now() / 1000).toString();
+      const signature = await computeHmacSha256(`${timestamp}./os/v1/preview`, CMS_BRIDGE_SECRET);
+
+      const res = await fetch(
+        `${WP_API_ORIGIN}/wp-json/os/v1/preview?slug=${encodeURIComponent(slug)}&type=case-study`,
+        {
+          headers: {
+            "X-OS-Signature": signature,
+            "X-OS-Timestamp": timestamp,
+          },
+          cache: "no-store",
+        }
+      );
+
+      if (!res.ok) {
+        return null;
+      }
+
+      const data = await res.json();
+      return CaseStudySchema.parse(data);
+    }
+
     const res = await fetch(
       `${WP_API_ORIGIN}/wp-json/wp/v2/case-study?slug=${encodeURIComponent(slug)}&_embed`,
-      getCmsFetchOptions([CMS_CACHE_TAGS.caseStudies])
+      getCmsFetchOptions([CMS_CACHE_TAGS.caseStudies, `case-study-${slug}`])
     );
 
     if (!res.ok) {
@@ -109,6 +146,81 @@ export async function getCaseStudyBySlug(slug: string): Promise<CaseStudy | null
     return CaseStudySchema.parse(data[0]);
   } catch (err) {
     console.error(`[CMS API] Failed to fetch case study "${slug}":`, err);
+    return null;
+  }
+}
+
+/**
+ * Fetch a page by its slug from /wp/v2/pages.
+ */
+export async function getPageBySlug(slug: string): Promise<Page | null> {
+  try {
+    const isDraft = await isDraftModeEnabled();
+
+    if (isDraft) {
+      const timestamp = Math.floor(Date.now() / 1000).toString();
+      const signature = await computeHmacSha256(`${timestamp}./os/v1/preview`, CMS_BRIDGE_SECRET);
+
+      const res = await fetch(
+        `${WP_API_ORIGIN}/wp-json/os/v1/preview?slug=${encodeURIComponent(slug)}&type=page`,
+        {
+          headers: {
+            "X-OS-Signature": signature,
+            "X-OS-Timestamp": timestamp,
+          },
+          cache: "no-store",
+        }
+      );
+
+      if (!res.ok) {
+        return null;
+      }
+
+      const data = await res.json();
+      return PageSchema.parse(data);
+    }
+
+    const res = await fetch(
+      `${WP_API_ORIGIN}/wp-json/wp/v2/pages?slug=${encodeURIComponent(slug)}&_embed`,
+      getCmsFetchOptions([CMS_CACHE_TAGS.pages, `page-${slug}`])
+    );
+
+    if (!res.ok) {
+      return null;
+    }
+
+    const data = await res.json();
+    if (!Array.isArray(data) || data.length === 0) {
+      return null;
+    }
+
+    return PageSchema.parse(data[0]);
+  } catch (err) {
+    console.error(`[CMS API] Failed to fetch page "${slug}":`, err);
+    return null;
+  }
+}
+
+/**
+ * Fetch a page by its ID.
+ */
+export async function getPageById(id: number): Promise<Page | null> {
+  try {
+    const isDraft = await isDraftModeEnabled();
+    const fetchOptions = isDraft
+      ? { cache: "no-store" as const }
+      : getCmsFetchOptions([CMS_CACHE_TAGS.pages, `page-id-${id}`]);
+
+    const url = `${WP_API_ORIGIN}/wp-json/wp/v2/pages/${id}?_embed`;
+    const res = await fetch(url, fetchOptions);
+    if (!res.ok) {
+      return null;
+    }
+
+    const data = await res.json();
+    return PageSchema.parse(data);
+  } catch (err) {
+    console.error(`[CMS API] Failed to fetch page ID ${id}:`, err);
     return null;
   }
 }

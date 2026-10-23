@@ -13,6 +13,7 @@ class OS_Headless_Post_Types {
 
     public static function init() {
         add_action('init', [__CLASS__, 'register_post_types']);
+        add_action('rest_api_init', [__CLASS__, 'register_rest_fields']);
         add_filter('manage_enquiry_posts_columns', [__CLASS__, 'enquiry_admin_columns']);
         add_action('manage_enquiry_posts_custom_column', [__CLASS__, 'enquiry_admin_column_content'], 10, 2);
     }
@@ -130,5 +131,29 @@ class OS_Headless_Post_Types {
                 echo esc_html(get_post_meta($post_id, 'budget', true) ?: '-');
                 break;
         }
+    }
+
+    /**
+     * Register ACF REST fields for case-study and page to ensure reliable API responses.
+     */
+    public static function register_rest_fields() {
+        register_rest_field('case-study', 'acf', [
+            'get_callback' => function($post_arr) {
+                $post_id = $post_arr['id'];
+                return [
+                    'business_focus'   => get_post_meta($post_id, 'business_focus', true) ?: '',
+                    'system_delivered' => get_post_meta($post_id, 'system_delivered', true) ?: '',
+                    'verified_outcome' => get_post_meta($post_id, 'verified_outcome', true) ?: '',
+                    'technology_1'     => get_post_meta($post_id, 'technology_1', true) ?: '',
+                    'technology_2'     => get_post_meta($post_id, 'technology_2', true) ?: '',
+                    'technology_3'     => get_post_meta($post_id, 'technology_3', true) ?: '',
+                    'color'            => get_post_meta($post_id, 'color', true) ?: '2563eb',
+                ];
+            },
+            'schema' => [
+                'description' => __('Case Study ACF Fields', 'oderinde-headless'),
+                'type'        => 'object',
+            ],
+        ]);
     }
 }

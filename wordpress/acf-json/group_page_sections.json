@@ -26,6 +26,26 @@
             { "key": "field_hero_cta_secondary_url", "label": "Secondary CTA URL", "name": "cta_secondary_url", "type": "text" }
           ]
         },
+        "layout_trust_bar": {
+          "key": "layout_trust_bar",
+          "name": "trust_bar",
+          "label": "Trust Bar & Platforms",
+          "display": "block",
+          "sub_fields": [
+            { "key": "field_trust_title", "label": "Trust Bar Title", "name": "title", "type": "text" }
+          ]
+        },
+        "layout_system_pillars": {
+          "key": "layout_system_pillars",
+          "name": "system_pillars",
+          "label": "System Pillars",
+          "display": "block",
+          "sub_fields": [
+            { "key": "field_sp_eyebrow", "label": "Eyebrow", "name": "eyebrow", "type": "text" },
+            { "key": "field_sp_title", "label": "Title", "name": "title", "type": "text" },
+            { "key": "field_sp_subtitle", "label": "Subtitle", "name": "subtitle", "type": "textarea" }
+          ]
+        },
         "layout_services": {
           "key": "layout_services",
           "name": "services_grid",
@@ -56,6 +76,27 @@
             { "key": "field_cs_title", "label": "Section Title", "name": "title", "type": "text" },
             { "key": "field_cs_subtitle", "label": "Subtitle", "name": "subtitle", "type": "textarea" },
             { "key": "field_cs_limit", "label": "Number of items", "name": "limit", "type": "number", "default_value": 6 }
+          ]
+        },
+        "layout_interactive_portal": {
+          "key": "layout_interactive_portal",
+          "name": "interactive_portal",
+          "label": "Interactive Client Portal",
+          "display": "block",
+          "sub_fields": [
+            { "key": "field_portal_eyebrow", "label": "Eyebrow", "name": "eyebrow", "type": "text" },
+            { "key": "field_portal_title", "label": "Title", "name": "title", "type": "text" },
+            { "key": "field_portal_subtitle", "label": "Subtitle", "name": "subtitle", "type": "textarea" }
+          ]
+        },
+        "layout_pricing_teaser": {
+          "key": "layout_pricing_teaser",
+          "name": "pricing_teaser",
+          "label": "Pricing Teaser",
+          "display": "block",
+          "sub_fields": [
+            { "key": "field_pt_title", "label": "Title", "name": "title", "type": "text" },
+            { "key": "field_pt_subtitle", "label": "Subtitle", "name": "subtitle", "type": "textarea" }
           ]
         },
         "layout_faq": {

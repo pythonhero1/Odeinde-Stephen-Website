@@ -148,3 +148,54 @@ export const RevalidatePayloadSchema = z.object({
 });
 
 export type RevalidatePayload = z.infer<typeof RevalidatePayloadSchema>;
+
+/**
+ * Standard WordPress REST Page schema for /wp/v2/pages
+ */
+export const PageAcfSchema = z.object({
+  sections: z.array(z.record(z.any())).optional().default([]),
+}).optional().default({});
+
+export const PageSchema = z.object({
+  id: z.number().int().positive(),
+  slug: z.string(),
+  title: z.object({
+    rendered: z.string(),
+  }),
+  content: z.object({
+    rendered: z.string(),
+  }).optional(),
+  excerpt: z.object({
+    rendered: z.string(),
+  }).optional(),
+  status: z.string().default("publish"),
+  acf: PageAcfSchema,
+});
+
+export type Page = z.infer<typeof PageSchema>;
+
+/**
+ * Contact Form Option Constants
+ */
+export const SERVICE_OPTIONS = [
+  "Business Website Development",
+  "E-commerce Development",
+  "Website Redesign",
+  "Client Portal / Digital Systems",
+  "Not Sure Yet",
+] as const;
+
+export const BUDGET_OPTIONS = [
+  "Not decided yet",
+  "Under £500",
+  "£500–£1,500",
+  "£1,500–£3,500",
+  "£3,500+",
+] as const;
+
+export const TIMELINE_OPTIONS = [
+  "Flexible",
+  "As soon as practical",
+  "Within 1–2 months",
+  "3 months or later",
+] as const;

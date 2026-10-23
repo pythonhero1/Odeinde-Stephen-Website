@@ -1,6 +1,10 @@
 import type { Metadata, Viewport } from "next";
 import { Inter, Work_Sans, Space_Mono } from "next/font/google";
 import "./globals.css";
+import { getSiteSettings } from "@/lib/cms/api";
+import { SkipLink } from "@/components/layout/SkipLink";
+import { Header } from "@/components/layout/Header";
+import { Footer } from "@/components/layout/Footer";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -34,18 +38,36 @@ export const viewport: Viewport = {
   initialScale: 1,
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const settings = await getSiteSettings();
+
   return (
     <html
       lang="en"
       className={`${inter.variable} ${workSans.variable} ${spaceMono.variable} dark`}
     >
-      <body className="bg-brand-bg text-foreground min-h-screen flex flex-col">
-        {children}
+      <body className="bg-brand-bg text-foreground min-h-screen flex flex-col font-sans">
+        <SkipLink />
+        <Header
+          siteName={settings.siteName}
+          bookingUrl={settings.bookingUrl}
+          portalUrl={settings.portalUrl}
+          navigation={settings.navigation}
+        />
+        <main id="main-content" className="flex-1 flex flex-col">
+          {children}
+        </main>
+        <Footer
+          copyright={settings.footer.copyright}
+          legalLinks={settings.footer.legalLinks}
+          bookingUrl={settings.bookingUrl}
+          portalUrl={settings.portalUrl}
+          socialLinks={settings.socialLinks}
+        />
       </body>
     </html>
   );

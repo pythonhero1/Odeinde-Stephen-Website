@@ -8,6 +8,14 @@ const config: Config = {
   ],
   darkMode: "class",
   theme: {
+    screens: {
+      xs: "360px",
+      sm: "390px",
+      md: "768px",
+      lg: "1024px",
+      xl: "1280px",
+      "2xl": "1440px",
+    },
     extend: {
       colors: {
         background: "var(--background)",
@@ -20,6 +28,9 @@ const config: Config = {
           accent: "#3B82F6",
           accentHover: "#2563EB",
           muted: "#9CA3AF",
+          badgePurple: "#C084FC",
+          green: "#30D1A6",
+          footerMuted: "#B5BFD4",
         },
       },
       fontFamily: {

@@ -13,7 +13,13 @@ export const CMS_CACHE_TAGS = {
   settings: "cms-settings",
 } as const;
 
-export type CmsCacheTag = typeof CMS_CACHE_TAGS[keyof typeof CMS_CACHE_TAGS];
+export type CmsCacheTag =
+  | (typeof CMS_CACHE_TAGS)[keyof typeof CMS_CACHE_TAGS]
+  | `page-${string}`
+  | `page-id-${number}`
+  | `case-study-${string}`
+  | `post-${string}`
+  | (string & {});
 
 /**
  * Default fallback time-to-live (seconds) for ISR when on-demand
