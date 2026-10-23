@@ -5,6 +5,8 @@ import { getSiteSettings } from "@/lib/cms/api";
 import { SkipLink } from "@/components/layout/SkipLink";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
+import { AnalyticsProvider } from "@/components/analytics/AnalyticsProvider";
+import { CookieConsentBanner } from "@/components/analytics/CookieConsentBanner";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -52,6 +54,7 @@ export default async function RootLayout({
     >
       <body className="bg-brand-bg text-foreground min-h-screen flex flex-col font-sans">
         <SkipLink />
+        <AnalyticsProvider />
         <Header
           siteName={settings.siteName}
           bookingUrl={settings.bookingUrl}
@@ -71,6 +74,7 @@ export default async function RootLayout({
           contactPhone={settings.contactPhone}
           contactLocation={settings.contactLocation}
         />
+        <CookieConsentBanner />
       </body>
     </html>
   );

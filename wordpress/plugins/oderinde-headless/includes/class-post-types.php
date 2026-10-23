@@ -183,5 +183,20 @@ class OS_Headless_Post_Types {
                 'type'        => 'object',
             ],
         ]);
+
+        register_rest_field(['page', 'case-study', 'post'], 'seo_meta', [
+            'get_callback' => function($post_arr) {
+                $post_id = $post_arr['id'];
+                $robots = get_post_meta($post_id, 'rank_math_robots', true);
+                return [
+                    'is_editorial_noindex' => is_array($robots) && in_array('noindex', $robots),
+                    'focus_keyword'        => get_post_meta($post_id, 'rank_math_focus_keyword', true) ?: '',
+                ];
+            },
+            'schema' => [
+                'description' => __('Rank Math Editorial SEO Flags', 'oderinde-headless'),
+                'type'        => 'object',
+            ],
+        ]);
     }
 }

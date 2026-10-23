@@ -13,9 +13,12 @@ class OS_Headless_Revalidate {
 
     public static function init() {
         add_action('save_post', [__CLASS__, 'on_save_post'], 20, 2);
+        add_action('post_updated', [__CLASS__, 'on_post_updated'], 20, 3);
         add_action('transition_post_status', [__CLASS__, 'on_status_change'], 20, 3);
         add_action('before_delete_post', [__CLASS__, 'on_delete_post'], 20, 2);
         add_action('acf/save_post', [__CLASS__, 'on_acf_save_options'], 20);
+        add_action('wp_update_nav_menu', [__CLASS__, 'on_menu_update'], 20);
+        add_action('update_option_rank-math-options-titles', [__CLASS__, 'on_rank_math_options_update'], 20);
     }
 
     /**
@@ -35,6 +38,36 @@ class OS_Headless_Revalidate {
         }
 
         self::dispatch_revalidation_for_post($post);
+    }
+
+    /**
+     * Capture slug changes on post updates to invalidate both old and new paths.
+     */
+    public static function on_post_updated($post_id, $post_after, $post_before) {
+        if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
+            return;
+        }
+
+        if (wp_is_post_revision($post_id) || wp_is_post_autosave($post_id)) {
+            return;
+        }
+
+        if (!$post_after || $post_after->post_status !== 'publish') {
+            return;
+        }
+
+        if ($post_before && $post_before->post_name !== $post_after->post_name) {
+            $old_path = self::get_public_path_for_slug($post_before->post_type, $post_before->post_name);
+            $new_path = self::get_public_path_for_slug($post_after->post_type, $post_after->post_name);
+
+            self::dispatch_revalidation([
+                'tags'     => ['cms-pages', 'cms-seo'],
+                'paths'    => array_values(array_filter(['/', $old_path, $new_path])),
+                'postId'   => $post_id,
+                'slug'     => $post_after->post_name,
+                'oldSlug'  => $post_before->post_name,
+            ]);
+        }
     }
 
     /**
@@ -65,9 +98,45 @@ class OS_Headless_Revalidate {
     public static function on_acf_save_options($post_id) {
         if ($post_id === 'options' || $post_id === 'oderinde-site-settings') {
             self::dispatch_revalidation([
-                'tags'  => ['cms-settings'],
+                'tags'  => ['cms-settings', 'cms-seo'],
                 'paths' => ['/'],
             ]);
+        }
+    }
+
+    /**
+     * Revalidate when WordPress navigation menus are updated.
+     */
+    public static function on_menu_update() {
+        self::dispatch_revalidation([
+            'tags'  => ['cms-settings', 'cms-pages'],
+            'paths' => ['/'],
+        ]);
+    }
+
+    /**
+     * Revalidate when Rank Math global titles/SEO settings change.
+     */
+    public static function on_rank_math_options_update() {
+        self::dispatch_revalidation([
+            'tags'  => ['cms-seo', 'cms-pages'],
+            'paths' => ['/'],
+        ]);
+    }
+
+    /**
+     * Helper to map post type and slug to public frontend path.
+     */
+    private static function get_public_path_for_slug($post_type, $slug) {
+        switch ($post_type) {
+            case 'page':
+                return '/' . ltrim($slug, '/');
+            case 'case-study':
+                return '/case-study/' . $slug;
+            case 'post':
+                return '/insights/' . $slug;
+            default:
+                return '/' . $slug;
         }
     }
 
@@ -75,7 +144,7 @@ class OS_Headless_Revalidate {
      * Map post to affected cache tags and paths.
      */
     private static function dispatch_revalidation_for_post(WP_Post $post) {
-        $tags = [];
+        $tags = ['cms-seo'];
         $paths = ['/']; // Homepage always refreshed for header/footer/recents
 
         switch ($post->post_type) {

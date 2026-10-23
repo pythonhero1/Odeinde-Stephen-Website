@@ -11,6 +11,7 @@ export const CMS_CACHE_TAGS = {
   posts: "cms-posts",
   caseStudies: "cms-case-studies",
   settings: "cms-settings",
+  seo: "cms-seo",
 } as const;
 
 export type CmsCacheTag =

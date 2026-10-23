@@ -105,3 +105,23 @@ Updated: 2026-10-23. All native and custom interfaces implemented in `wordpress/
 - Webhook receiver for WordPress content publish events.
 - Verifies HMAC signature using `REVALIDATION_SECRET` and timestamp replay window.
 - Calls Next.js `revalidateTag()` and `revalidatePath()`.
+
+---
+
+## 4. Headless SEO, Rank Math, and Dynamic Sitemaps (Phase 05)
+
+### A. `GET /wp-json/rankmath/v1/getHead?url=...`
+- **Purpose:** Fetches compiled SEO metadata tags and Schema.org `@graph` from Rank Math.
+- **Cache Tag:** `cms-seo` with bounded fallback TTL (3600s).
+- **Origin Translation:** Translates CMS origins (`http://localhost:10004`, `https://cms.oderindestephen.com`) to public origin (`https://oderindestephen.com`) in canonicals, Open Graph, Twitter cards, and Schema `@id` attributes while preserving external links.
+- **Anti-Contamination Guard:** Overrides CMS-level search discouragement (`blog_public = 0`) on production domain while strictly preserving draft unindexing and explicit editorial page-level `is_editorial_noindex`.
+- **Deduplication:** Guarantees strictly ONE `WebSite`, ONE `Organization`, and ONE `BreadcrumbList` node per page.
+
+### B. Dynamic Sitemap (`/sitemap.xml`) & Robots (`/robots.txt`)
+- **`/sitemap.xml`:** Assembles all 11 core static pages, 6 published case studies, and published blog posts with accurate `lastModified` timestamps. Excludes drafts, preview URLs, error routes, and legacy redirect sources.
+- **`/robots.txt`:** Allows public crawling in production (`allow: /`), disallows `/api/`, `/_next/`, and preview query strings, and references `https://oderindestephen.com/sitemap.xml`. In staging/preview, disallows all indexing (`disallow: /`).
+
+### C. Revalidation Extensions (`class-revalidate.php`)
+- **Slug Changes:** Hooks `post_updated` to detect `$post_before->post_name !== $post_after->post_name` and dispatches revalidation for both old and new paths.
+- **Menu Updates:** Hooks `wp_update_nav_menu` to revalidate `['cms-settings', 'cms-pages']` and `['/']`.
+- **SEO Updates:** Hooks `update_option_rank-math-options-titles` to dispatch `cms-seo` and `cms-pages`.

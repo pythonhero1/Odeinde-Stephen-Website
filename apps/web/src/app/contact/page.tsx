@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import { Mail, Calendar, Clock, ShieldCheck, MapPin, Phone } from "lucide-react";
 import { getSiteSettings } from "@/lib/cms/api";
+import { constructPageMetadata } from "@/lib/seo/metadata";
+import { getRankMathSeo } from "@/lib/seo/rankmath";
+import { JsonLd } from "@/components/seo/JsonLd";
 import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { ContactForm } from "@/components/forms/ContactForm";
@@ -8,17 +11,19 @@ import { ContactChannelsGrid } from "@/components/contact/ContactChannelsGrid";
 import { PostEnquiryTimeline } from "@/components/contact/PostEnquiryTimeline";
 import { GlobalDeliverySection } from "@/components/contact/GlobalDeliverySection";
 
-export const metadata: Metadata = {
-  title: "Contact & Project Enquiry | Oderinde Stephen",
-  description:
-    "Direct project consultation and quote requests for headless WordPress, Next.js, and bespoke web engineering.",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  return constructPageMetadata("/contact");
+}
 
 export default async function ContactPage() {
-  const settings = await getSiteSettings();
+  const [settings, seo] = await Promise.all([
+    getSiteSettings(),
+    getRankMathSeo("/contact"),
+  ]);
 
   return (
     <div className="py-12 sm:py-20 flex-1">
+      <JsonLd nodes={seo.jsonLd} />
       <Container size="default">
         <SectionHeading
           eyebrow="DIRECT COMMUNICATION"

@@ -11,15 +11,21 @@ import { PricingFactorsSection } from "@/components/sections/PricingFactorsSecti
 import { FaqSection } from "@/components/sections/FaqSection";
 import { ClosingCtaSection } from "@/components/sections/ClosingCtaSection";
 import { getSiteSettings } from "@/lib/cms/api";
+import { constructPageMetadata } from "@/lib/seo/metadata";
+import { getRankMathSeo } from "@/lib/seo/rankmath";
+import { JsonLd } from "@/components/seo/JsonLd";
+import type { Metadata } from "next";
 import { ArrowRight, CheckCircle2 } from "lucide-react";
 
-export const metadata = {
-  title: "Pricing & Investment Packages | Oderinde Stephen",
-  description: "Clear indicative starting prices for business website development, e-commerce stores, website redesigns, and digital portals. Tailored GBP quotations before you commit.",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  return constructPageMetadata("/pricing");
+}
 
 export default async function PricingPage() {
-  const settings = await getSiteSettings();
+  const [settings, seo] = await Promise.all([
+    getSiteSettings(),
+    getRankMathSeo("/pricing"),
+  ]);
 
   const pricingFaqs = [
     {
@@ -50,6 +56,7 @@ export default async function PricingPage() {
 
   return (
     <div className="w-full">
+      <JsonLd nodes={seo.jsonLd} />
       {/* Hero Section */}
       <section className="py-20 sm:py-28 bg-brand-bg relative overflow-hidden">
         <Container>

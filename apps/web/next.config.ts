@@ -1,5 +1,10 @@
 import type { NextConfig } from "next";
 
+const CMS_ORIGIN =
+  process.env.CMS_MEDIA_ORIGIN ||
+  process.env.WP_API_ORIGIN ||
+  "https://cms.oderindestephen.com";
+
 const nextConfig: NextConfig = {
   reactStrictMode: true,
   images: {
@@ -22,6 +27,7 @@ const nextConfig: NextConfig = {
   trailingSlash: false,
   async redirects() {
     return [
+      // Core solutions and pages
       {
         source: "/solutions",
         destination: "/business-website-solutions",
@@ -60,6 +66,62 @@ const nextConfig: NextConfig = {
       {
         source: "/shopify-development",
         destination: "/e-commerce-development",
+        permanent: true,
+      },
+      // Historical post permalink (from WordPress XML baseline)
+      {
+        source: "/why-wordpress-is-still-a-game-changer-for-small-businesses-in-2026",
+        destination: "/insights/why-wordpress-is-still-a-game-changer-for-small-businesses-in-2026",
+        permanent: true,
+      },
+      // WordPress RSS feeds
+      {
+        source: "/feed",
+        destination: "/insights",
+        permanent: true,
+      },
+      {
+        source: "/rss",
+        destination: "/insights",
+        permanent: true,
+      },
+      // WordPress author archives
+      {
+        source: "/author/:slug*",
+        destination: "/insights",
+        permanent: true,
+      },
+      // Divi Theme Builder layouts & templates cleanup
+      {
+        source: "/et_pb_layout/:slug*",
+        destination: "/",
+        permanent: true,
+      },
+      {
+        source: "/et_template/:slug*",
+        destination: "/",
+        permanent: true,
+      },
+      {
+        source: "/et_body_layout/:slug*",
+        destination: "/",
+        permanent: true,
+      },
+      // WordPress admin/login forwards
+      {
+        source: "/wp-admin/:path*",
+        destination: `${CMS_ORIGIN}/wp-admin/:path*`,
+        permanent: false,
+      },
+      {
+        source: "/wp-login.php",
+        destination: `${CMS_ORIGIN}/wp-login.php`,
+        permanent: false,
+      },
+      // Old media URL continuity (/wp-content/uploads/...)
+      {
+        source: "/wp-content/uploads/:path*",
+        destination: `${CMS_ORIGIN}/wp-content/uploads/:path*`,
         permanent: true,
       },
     ];

@@ -96,6 +96,9 @@ export type CaseStudyAcf = z.infer<typeof CaseStudyAcfSchema>;
 export const CaseStudySchema = z.object({
   id: z.number().int().positive(),
   slug: z.string(),
+  status: z.string().optional().default("publish"),
+  date: z.string().optional().default(""),
+  modified: z.string().optional().default(""),
   title: z.object({
     rendered: z.string(),
   }),
@@ -133,6 +136,7 @@ export type BlogPostAcf = z.infer<typeof BlogPostAcfSchema>;
 export const BlogPostSchema = z.object({
   id: z.number().int().positive(),
   slug: z.string(),
+  status: z.string().optional().default("publish"),
   title: z.object({
     rendered: z.string(),
   }),

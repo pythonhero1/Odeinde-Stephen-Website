@@ -1,28 +1,28 @@
 import type { Metadata } from "next";
 import { getPosts, getSiteSettings } from "@/lib/cms/api";
+import { constructPageMetadata } from "@/lib/seo/metadata";
+import { getRankMathSeo } from "@/lib/seo/rankmath";
+import { JsonLd } from "@/components/seo/JsonLd";
 import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { BlogCard } from "@/components/blog/BlogCard";
 import { LeadMagnetSection } from "@/components/sections/LeadMagnetSection";
 import { ClosingCtaSection } from "@/components/sections/ClosingCtaSection";
 
-export const metadata: Metadata = {
-  title: "Insights & Technical Guides | Oderinde Stephen",
-  description:
-    "Engineering insights, WordPress performance guides, headless web architecture breakdowns, and actionable strategies for high-converting business websites.",
-  alternates: {
-    canonical: "/insights",
-  },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  return constructPageMetadata("/insights");
+}
 
 export default async function InsightsPage() {
-  const [posts, settings] = await Promise.all([
+  const [posts, settings, seo] = await Promise.all([
     getPosts(),
     getSiteSettings(),
+    getRankMathSeo("/insights"),
   ]);
 
   return (
     <div className="py-12 sm:py-20 flex-1">
+      <JsonLd nodes={seo.jsonLd} />
       <Container size="default">
         <SectionHeading
           eyebrow="PRACTICAL GUIDES & ARCHITECTURE"

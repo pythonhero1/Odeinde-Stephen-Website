@@ -2,6 +2,9 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { draftMode } from "next/headers";
 import { getPostBySlug, getPosts, getSiteSettings } from "@/lib/cms/api";
+import { constructPageMetadata } from "@/lib/seo/metadata";
+import { getRankMathSeo } from "@/lib/seo/rankmath";
+import { JsonLd } from "@/components/seo/JsonLd";
 import { Container } from "@/components/ui/Container";
 import { BlogArticleHeader } from "@/components/blog/BlogArticleHeader";
 import { RelatedServiceCta } from "@/components/blog/RelatedServiceCta";
@@ -27,26 +30,22 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   }
 
   const { isEnabled: isDraft } = await draftMode();
-  const rawExcerpt = post.excerpt.rendered.replace(/<[^>]+>/g, "").trim();
+  const rawExcerpt = post.excerpt.rendered.replace(/<[^>]+>/g, "").trim().slice(0, 160);
 
-  return {
-    title: `${post.title.rendered} | Oderinde Stephen`,
-    description: rawExcerpt.slice(0, 160) || "Read this technical article by Oderinde Stephen.",
-    alternates: {
-      canonical: `/insights/${post.slug}`,
-    },
-    robots: isDraft
-      ? { index: false, follow: false, nocache: true }
-      : { index: true, follow: true },
-  };
+  return constructPageMetadata(`/insights/${slug}`, {
+    fallbackTitle: post.title.rendered,
+    fallbackDescription: rawExcerpt,
+    isDraft,
+  });
 }
 
 export default async function SingleInsightPage({ params }: PageProps) {
   const { slug } = await params;
-  const [post, settings, draft] = await Promise.all([
+  const draft = await draftMode();
+  const [post, settings, seo] = await Promise.all([
     getPostBySlug(slug),
     getSiteSettings(),
-    draftMode(),
+    getRankMathSeo(`/insights/${slug}`, { isDraft: draft.isEnabled }),
   ]);
 
   if (!post) {
@@ -55,6 +54,7 @@ export default async function SingleInsightPage({ params }: PageProps) {
 
   return (
     <div className="py-12 sm:py-20 flex-1">
+      <JsonLd nodes={seo.jsonLd} />
       {draft.isEnabled && (
         <div className="w-full bg-amber-500/20 border-b border-amber-500/40 text-amber-300 px-4 py-2 text-xs font-mono text-center flex items-center justify-center gap-2 mb-8">
           <span className="w-2 h-2 rounded-full bg-amber-400 animate-pulse" />

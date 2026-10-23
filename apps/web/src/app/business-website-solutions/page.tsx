@@ -14,17 +14,21 @@ import { PricingTeaserSection } from "@/components/sections/PricingTeaserSection
 import { FaqSection } from "@/components/sections/FaqSection";
 import { ClosingCtaSection } from "@/components/sections/ClosingCtaSection";
 import { getSiteSettings, getCaseStudies } from "@/lib/cms/api";
+import { constructPageMetadata } from "@/lib/seo/metadata";
+import { getRankMathSeo } from "@/lib/seo/rankmath";
+import { JsonLd } from "@/components/seo/JsonLd";
+import type { Metadata } from "next";
 import { ArrowRight, CheckCircle2, MessageCircleQuestion } from "lucide-react";
 
-export const metadata = {
-  title: "Business Website Solutions | Oderinde Stephen",
-  description: "Start with what your business needs the website to solve. Problem-focused digital strategies and platform-flexible web systems.",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  return constructPageMetadata("/business-website-solutions");
+}
 
 export default async function BusinessWebsiteSolutionsPage() {
-  const [settings, caseStudies] = await Promise.all([
+  const [settings, caseStudies, seo] = await Promise.all([
     getSiteSettings(),
     getCaseStudies(),
+    getRankMathSeo("/business-website-solutions"),
   ]);
 
   const solutionFaqs = [
@@ -52,6 +56,7 @@ export default async function BusinessWebsiteSolutionsPage() {
 
   return (
     <div className="w-full">
+      <JsonLd nodes={seo.jsonLd} />
       {/* Hero Section */}
       <section className="py-20 sm:py-28 bg-brand-bg relative overflow-hidden">
         <Container>

@@ -8,21 +8,26 @@ import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
 import { ClosingCtaSection } from "@/components/sections/ClosingCtaSection";
 import { getSiteSettings, getCaseStudies } from "@/lib/cms/api";
+import { constructPageMetadata } from "@/lib/seo/metadata";
+import { getRankMathSeo } from "@/lib/seo/rankmath";
+import { JsonLd } from "@/components/seo/JsonLd";
+import type { Metadata } from "next";
 import { ExternalLink, ArrowRight, CheckCircle2 } from "lucide-react";
 
-export const metadata = {
-  title: "Portfolio | Selected Live Website Projects | Oderinde Stephen",
-  description: "Visual portfolio gallery featuring completed client websites with direct links to live verified web applications and deep-dive case studies.",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  return constructPageMetadata("/portfolio");
+}
 
 export default async function PortfolioPage() {
-  const [settings, caseStudies] = await Promise.all([
+  const [settings, caseStudies, seo] = await Promise.all([
     getSiteSettings(),
     getCaseStudies(),
+    getRankMathSeo("/portfolio"),
   ]);
 
   return (
     <div className="w-full">
+      <JsonLd nodes={seo.jsonLd} />
       {/* Hero Section */}
       <section className="py-20 sm:py-28 bg-brand-bg relative overflow-hidden">
         <Container>

@@ -10,17 +10,21 @@ import { ClientFeedbackSection } from "@/components/sections/ClientFeedbackSecti
 import { FaqSection } from "@/components/sections/FaqSection";
 import { ClosingCtaSection } from "@/components/sections/ClosingCtaSection";
 import { getSiteSettings, getCaseStudies } from "@/lib/cms/api";
+import { constructPageMetadata } from "@/lib/seo/metadata";
+import { getRankMathSeo } from "@/lib/seo/rankmath";
+import { JsonLd } from "@/components/seo/JsonLd";
+import type { Metadata } from "next";
 import { ArrowRight, CheckCircle2, ShieldCheck, Cpu, Code2 } from "lucide-react";
 
-export const metadata = {
-  title: "Case Studies & Client Projects | Oderinde Stephen",
-  description: "Explore verified website development, e-commerce, redesign, and digital solution case studies built around real business goals.",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  return constructPageMetadata("/case-studies");
+}
 
 export default async function CaseStudiesPage() {
-  const [settings, caseStudies] = await Promise.all([
+  const [settings, caseStudies, seo] = await Promise.all([
     getSiteSettings(),
     getCaseStudies(),
+    getRankMathSeo("/case-studies"),
   ]);
 
   const caseStudyFaqs = [
@@ -74,6 +78,7 @@ export default async function CaseStudiesPage() {
 
   return (
     <div className="w-full">
+      <JsonLd nodes={seo.jsonLd} />
       {/* Hero Section */}
       <section className="py-20 sm:py-28 bg-brand-bg relative overflow-hidden">
         <Container>

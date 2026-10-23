@@ -2,19 +2,20 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ShieldCheck, Mail, ArrowLeft } from "lucide-react";
 import { Container } from "@/components/ui/Container";
+import { constructPageMetadata } from "@/lib/seo/metadata";
+import { getRankMathSeo } from "@/lib/seo/rankmath";
+import { JsonLd } from "@/components/seo/JsonLd";
 
-export const metadata: Metadata = {
-  title: "Privacy Policy | Oderinde Stephen",
-  description:
-    "UK GDPR compliant Privacy Policy for Oderinde Stephen website development and digital solutions consulting.",
-  alternates: {
-    canonical: "/privacy-policy",
-  },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  return constructPageMetadata("/privacy-policy");
+}
 
-export default function PrivacyPolicyPage() {
+export default async function PrivacyPolicyPage() {
+  const seo = await getRankMathSeo("/privacy-policy");
+
   return (
     <div className="py-12 sm:py-20 flex-1">
+      <JsonLd nodes={seo.jsonLd} />
       <Container size="default">
         <div className="max-w-3xl mx-auto">
           <Link

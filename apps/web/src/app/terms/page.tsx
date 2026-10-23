@@ -2,19 +2,20 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { FileText, ArrowLeft } from "lucide-react";
 import { Container } from "@/components/ui/Container";
+import { constructPageMetadata } from "@/lib/seo/metadata";
+import { getRankMathSeo } from "@/lib/seo/rankmath";
+import { JsonLd } from "@/components/seo/JsonLd";
 
-export const metadata: Metadata = {
-  title: "Terms of Service | Oderinde Stephen",
-  description:
-    "Terms of service, proposal policies, intellectual property ownership, and engagement conditions for Oderinde Stephen web engineering services.",
-  alternates: {
-    canonical: "/terms",
-  },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  return constructPageMetadata("/terms");
+}
 
-export default function TermsPage() {
+export default async function TermsPage() {
+  const seo = await getRankMathSeo("/terms");
+
   return (
     <div className="py-12 sm:py-20 flex-1">
+      <JsonLd nodes={seo.jsonLd} />
       <Container size="default">
         <div className="max-w-3xl mx-auto">
           <Link

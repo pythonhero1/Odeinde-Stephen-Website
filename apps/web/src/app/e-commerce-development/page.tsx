@@ -16,17 +16,21 @@ import { PricingTeaserSection } from "@/components/sections/PricingTeaserSection
 import { FaqSection } from "@/components/sections/FaqSection";
 import { ClosingCtaSection } from "@/components/sections/ClosingCtaSection";
 import { getSiteSettings, getCaseStudies } from "@/lib/cms/api";
+import { constructPageMetadata } from "@/lib/seo/metadata";
+import { getRankMathSeo } from "@/lib/seo/rankmath";
+import { JsonLd } from "@/components/seo/JsonLd";
+import type { Metadata } from "next";
 import { ArrowRight, CheckCircle2 } from "lucide-react";
 
-export const metadata = {
-  title: "E-commerce Development | Oderinde Stephen",
-  description: "Professional Shopify and WooCommerce online stores engineered around customer buying journeys, streamlined checkout, and operational efficiency.",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  return constructPageMetadata("/e-commerce-development");
+}
 
 export default async function EcommerceDevelopmentPage() {
-  const [settings, caseStudies] = await Promise.all([
+  const [settings, caseStudies, seo] = await Promise.all([
     getSiteSettings(),
     getCaseStudies(),
+    getRankMathSeo("/e-commerce-development"),
   ]);
 
   const ecommerceFaqs = [
@@ -58,6 +62,7 @@ export default async function EcommerceDevelopmentPage() {
 
   return (
     <div className="w-full">
+      <JsonLd nodes={seo.jsonLd} />
       {/* Hero Section */}
       <section className="py-20 sm:py-28 bg-brand-bg relative overflow-hidden">
         <Container>

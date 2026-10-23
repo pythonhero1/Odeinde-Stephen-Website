@@ -20,6 +20,9 @@ import { Card } from "@/components/ui/Card";
 import { Badge } from "@/components/ui/Badge";
 import { PipePatchProBespokeCaseStudy } from "@/components/case-study/PipePatchProBespokeCaseStudy";
 import { CaseStudyNavigation } from "@/components/case-study/CaseStudyNavigation";
+import { constructPageMetadata } from "@/lib/seo/metadata";
+import { getRankMathSeo } from "@/lib/seo/rankmath";
+import { JsonLd } from "@/components/seo/JsonLd";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -36,23 +39,23 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   }
 
   const { isEnabled: isDraft } = await draftMode();
+  const rawExcerpt = caseStudy.excerpt.rendered.replace(/<[^>]+>/g, "").trim().slice(0, 160);
 
-  return {
-    title: `${caseStudy.title.rendered} | Case Study`,
-    description: caseStudy.excerpt.rendered.replace(/<[^>]+>/g, "").slice(0, 160),
-    robots: isDraft
-      ? { index: false, follow: false, nocache: true }
-      : { index: true, follow: true },
-  };
+  return constructPageMetadata(`/case-study/${slug}`, {
+    fallbackTitle: caseStudy.title.rendered,
+    fallbackDescription: rawExcerpt,
+    isDraft,
+  });
 }
 
 export default async function SingleCaseStudyPage({ params }: PageProps) {
   const { slug } = await params;
-  const [caseStudy, settings, allCaseStudies, draft] = await Promise.all([
+  const draft = await draftMode();
+  const [caseStudy, settings, allCaseStudies, seo] = await Promise.all([
     getCaseStudyBySlug(slug),
     getSiteSettings(),
     getCaseStudies(),
-    draftMode(),
+    getRankMathSeo(`/case-study/${slug}`, { isDraft: draft.isEnabled }),
   ]);
 
   if (!caseStudy) {
@@ -65,6 +68,7 @@ export default async function SingleCaseStudyPage({ params }: PageProps) {
   if (isBespokePipePatch) {
     return (
       <div className="w-full">
+        <JsonLd nodes={seo.jsonLd} />
         {draft.isEnabled && (
           <div className="w-full bg-amber-500/20 border-b border-amber-500/40 text-amber-300 px-4 py-2 text-xs font-mono text-center flex items-center justify-center gap-2">
             <span className="w-2 h-2 rounded-full bg-amber-400 animate-pulse" />
@@ -91,6 +95,7 @@ export default async function SingleCaseStudyPage({ params }: PageProps) {
 
   return (
     <article className="py-12 sm:py-20 flex-1 flex flex-col">
+      <JsonLd nodes={seo.jsonLd} />
       {/* Draft Mode Notice Bar */}
       {isDraft && (
         <div className="w-full bg-amber-500/20 border-b border-amber-500/40 text-amber-300 px-4 py-2 text-xs font-mono text-center flex items-center justify-center gap-2">

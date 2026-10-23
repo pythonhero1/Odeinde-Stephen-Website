@@ -97,6 +97,28 @@ export function InteractivePortalSection() {
   const [activeTab, setActiveTab] = useState<string>(tabs[0].id);
   const currentTab = tabs.find((t) => t.id === activeTab) || tabs[0];
 
+  const handleTabKeyDown = (e: React.KeyboardEvent<HTMLButtonElement>, currentIndex: number) => {
+    if (e.key === "ArrowRight") {
+      e.preventDefault();
+      const nextIndex = (currentIndex + 1) % tabs.length;
+      setActiveTab(tabs[nextIndex].id);
+      document.getElementById(`tab-${tabs[nextIndex].id}`)?.focus();
+    } else if (e.key === "ArrowLeft") {
+      e.preventDefault();
+      const prevIndex = (currentIndex - 1 + tabs.length) % tabs.length;
+      setActiveTab(tabs[prevIndex].id);
+      document.getElementById(`tab-${tabs[prevIndex].id}`)?.focus();
+    } else if (e.key === "Home") {
+      e.preventDefault();
+      setActiveTab(tabs[0].id);
+      document.getElementById(`tab-${tabs[0].id}`)?.focus();
+    } else if (e.key === "End") {
+      e.preventDefault();
+      setActiveTab(tabs[tabs.length - 1].id);
+      document.getElementById(`tab-${tabs[tabs.length - 1].id}`)?.focus();
+    }
+  };
+
   return (
     <section className="py-20 sm:py-28">
       <Container size="default">
@@ -136,7 +158,7 @@ export function InteractivePortalSection() {
             aria-label="Client Workspace Sections"
             className="flex overflow-x-auto border-b border-brand-border bg-brand-surface/30 px-4 py-2 gap-2 scrollbar-none"
           >
-            {tabs.map((tab) => {
+            {tabs.map((tab, idx) => {
               const Icon = tab.icon;
               const isSelected = activeTab === tab.id;
               return (
@@ -148,6 +170,7 @@ export function InteractivePortalSection() {
                   aria-controls={`panel-${tab.id}`}
                   tabIndex={isSelected ? 0 : -1}
                   onClick={() => setActiveTab(tab.id)}
+                  onKeyDown={(e) => handleTabKeyDown(e, idx)}
                   className={`flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-mono whitespace-nowrap transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-accent ${
                     isSelected
                       ? "bg-brand-accentHover text-white shadow-sm"
