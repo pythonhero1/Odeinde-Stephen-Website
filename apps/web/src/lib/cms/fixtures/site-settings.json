@@ -3,6 +3,8 @@
   "siteTagline": "Website Development & Digital Solutions",
   "bookingUrl": "https://cal.com/oderinde/free",
   "contactEmail": "Contact@oderindestephen.com",
+  "contactPhone": "+44 7848 149224",
+  "contactLocation": "London, United Kingdom & Worldwide Remote",
   "currency": "GBP",
   "portalUrl": "https://portal.oderindestephen.com/",
   "socialLinks": {
@@ -15,7 +17,9 @@
     { "label": "Solutions", "path": "/business-website-solutions", "isExternal": false, "isCta": false },
     { "label": "Development", "path": "/business-website-development", "isExternal": false, "isCta": false },
     { "label": "Case Studies", "path": "/case-studies", "isExternal": false, "isCta": false },
+    { "label": "Portfolio", "path": "/portfolio", "isExternal": false, "isCta": false },
     { "label": "Pricing", "path": "/pricing", "isExternal": false, "isCta": false },
+    { "label": "Insights", "path": "/insights", "isExternal": false, "isCta": false },
     { "label": "Contact", "path": "/contact", "isExternal": false, "isCta": false },
     { "label": "Book Call", "path": "https://cal.com/oderinde/free", "isExternal": true, "isCta": true }
   ],

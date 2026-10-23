@@ -150,6 +150,62 @@
       "show_color_wheel": 1,
       "custom_palette_source": "",
       "palette_colors": ""
+    },
+    {
+      "key": "field_cs_live_url",
+      "label": "Live Website URL",
+      "name": "live_url",
+      "type": "url",
+      "instructions": "External live project website URL.",
+      "required": 0
+    },
+    {
+      "key": "field_cs_client_name",
+      "label": "Client / Brand Name",
+      "name": "client_name",
+      "type": "text",
+      "instructions": "Client business or product name.",
+      "required": 0
+    },
+    {
+      "key": "field_cs_project_type",
+      "label": "Project Type",
+      "name": "project_type",
+      "type": "text",
+      "instructions": "Service category or deliverable type.",
+      "required": 0
+    },
+    {
+      "key": "field_cs_rating_value",
+      "label": "Rating Value",
+      "name": "rating_value",
+      "type": "text",
+      "default_value": "5.0 / 5.0",
+      "required": 0
+    },
+    {
+      "key": "field_cs_rating_source",
+      "label": "Rating Source",
+      "name": "rating_source",
+      "type": "text",
+      "instructions": "Platform or verified review origin.",
+      "required": 0
+    },
+    {
+      "key": "field_cs_review_quote",
+      "label": "Review Quote",
+      "name": "review_quote",
+      "type": "textarea",
+      "instructions": "Client feedback quote.",
+      "required": 0
+    },
+    {
+      "key": "field_cs_review_author",
+      "label": "Review Author",
+      "name": "review_author",
+      "type": "text",
+      "instructions": "Author name and role.",
+      "required": 0
     }
   ],
   "location": [

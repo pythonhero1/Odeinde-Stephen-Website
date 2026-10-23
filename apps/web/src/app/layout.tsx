@@ -67,6 +67,9 @@ export default async function RootLayout({
           bookingUrl={settings.bookingUrl}
           portalUrl={settings.portalUrl}
           socialLinks={settings.socialLinks}
+          contactEmail={settings.contactEmail}
+          contactPhone={settings.contactPhone}
+          contactLocation={settings.contactLocation}
         />
       </body>
     </html>

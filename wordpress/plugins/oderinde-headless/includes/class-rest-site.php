@@ -42,6 +42,16 @@ class OS_Headless_REST_Site {
             $contact_email = 'Contact@oderindestephen.com'; // Per D-10
         }
 
+        $contact_phone = function_exists('get_field') ? get_field('contact_phone', 'option') : '';
+        if (empty($contact_phone)) {
+            $contact_phone = '+44 7848 149224';
+        }
+
+        $contact_location = function_exists('get_field') ? get_field('contact_location', 'option') : '';
+        if (empty($contact_location)) {
+            $contact_location = 'London, United Kingdom & Worldwide Remote';
+        }
+
         $currency = function_exists('get_field') ? get_field('currency', 'option') : '';
         if (empty($currency)) {
             $currency = 'GBP'; // Per D-8
@@ -101,8 +111,10 @@ class OS_Headless_REST_Site {
             'siteName'     => sanitize_text_field($site_name),
             'siteTagline'  => sanitize_text_field($site_tagline),
             'bookingUrl'   => esc_url_raw($booking_url),
-            'contactEmail' => sanitize_email($contact_email),
-            'currency'     => sanitize_text_field($currency),
+            'contactEmail'    => sanitize_email($contact_email),
+            'contactPhone'    => sanitize_text_field($contact_phone),
+            'contactLocation' => sanitize_text_field($contact_location),
+            'currency'        => sanitize_text_field($currency),
             'portalUrl'    => esc_url_raw($portal_url),
             'socialLinks'  => $social_links,
             'navigation'   => $navigation,

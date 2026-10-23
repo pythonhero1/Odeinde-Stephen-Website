@@ -29,6 +29,22 @@
       "instructions": "Verified recipient mailbox for contact enquiries per D-10."
     },
     {
+      "key": "field_contact_phone",
+      "label": "Contact Phone Number",
+      "name": "contact_phone",
+      "type": "text",
+      "default_value": "+44 7848 149224",
+      "instructions": "Public direct contact phone number."
+    },
+    {
+      "key": "field_contact_location",
+      "label": "Office Location / Delivery",
+      "name": "contact_location",
+      "type": "text",
+      "default_value": "London, United Kingdom & Worldwide Remote",
+      "instructions": "Geographic delivery context."
+    },
+    {
       "key": "field_currency",
       "label": "Standard Currency",
       "name": "currency",

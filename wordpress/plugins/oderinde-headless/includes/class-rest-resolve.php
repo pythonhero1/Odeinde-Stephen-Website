@@ -52,9 +52,9 @@ class OS_Headless_REST_Resolve {
             }
         }
 
-        // 2. Case study single: /case-study/{slug}
-        if (preg_match('#^case-study/([^/]+)$#', $path, $matches)) {
-            $slug = sanitize_title($matches[1]);
+        // 2. Case study single: /case-study/{slug} or /portfolio/{slug}
+        if (preg_match('#^(case-study|portfolio)/([^/]+)$#', $path, $matches)) {
+            $slug = sanitize_title($matches[2]);
             $posts = get_posts([
                 'name'           => $slug,
                 'post_type'      => 'case-study',
@@ -86,8 +86,39 @@ class OS_Headless_REST_Resolve {
             return new WP_Error('not_found', __('Blog post not found', 'oderinde-headless'), ['status' => 404]);
         }
 
-        // 4. Standard Page lookup by path
-        $page = get_page_by_path($path);
+        // 3b. Archives: /portfolio, /case-studies, /insights, /blog
+        if ($path === 'portfolio' || $path === 'case-studies') {
+            $cs_page = get_page_by_path('case-studies');
+            if ($cs_page && $cs_page->post_status === 'publish') {
+                return self::format_resolution_response($cs_page, 'archive-case-studies');
+            }
+        }
+        if ($path === 'insights' || $path === 'blog') {
+            return new WP_REST_Response([
+                'id'       => 0,
+                'slug'     => $path,
+                'type'     => 'post-archive',
+                'template' => 'archive-posts',
+                'title'    => 'Insights & Guides',
+                'status'   => 'publish',
+            ], 200);
+        }
+
+        // 4. Standard Page lookup by path (handling slug variations)
+        $normalized_path = $path;
+        if ($path === 'e-commerce-development') {
+            $page_check = get_page_by_path('e-commerce-development');
+            if (!$page_check) {
+                $normalized_path = 'ecommerce-development';
+            }
+        } elseif ($path === 'ecommerce-development') {
+            $page_check = get_page_by_path('ecommerce-development');
+            if (!$page_check) {
+                $normalized_path = 'e-commerce-development';
+            }
+        }
+
+        $page = get_page_by_path($normalized_path);
         if ($page && $page->post_status === 'publish') {
             $template = 'page';
             if ($page->post_name === 'case-studies') {

@@ -1,11 +1,12 @@
 import React from "react";
 import Link from "next/link";
 
-interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: "primary" | "secondary" | "outline" | "ghost";
   size?: "sm" | "md" | "lg";
   href?: string;
   isExternal?: boolean;
+  asChild?: boolean;
   children: React.ReactNode;
   className?: string;
 }
@@ -15,6 +16,7 @@ export function Button({
   size = "md",
   href,
   isExternal = false,
+  asChild = false,
   children,
   className = "",
   ...props
@@ -40,6 +42,13 @@ export function Button({
 
   const combinedClasses = `${baseClasses} ${variantClasses[variant]} ${sizeClasses[size]} ${className}`;
 
+  if (asChild && React.isValidElement(children)) {
+    const childElement = children as React.ReactElement<{ className?: string }>;
+    return React.cloneElement(childElement, {
+      className: `${combinedClasses} ${childElement.props.className || ""}`.trim(),
+    });
+  }
+
   if (href) {
     if (isExternal) {
       return (
@@ -61,7 +70,7 @@ export function Button({
   }
 
   return (
-    <button className={combinedClasses} {...props}>
+    <button type="button" className={combinedClasses} {...props}>
       {children}
     </button>
   );

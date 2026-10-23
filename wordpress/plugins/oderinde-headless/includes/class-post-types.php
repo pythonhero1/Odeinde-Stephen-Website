@@ -134,7 +134,7 @@ class OS_Headless_Post_Types {
     }
 
     /**
-     * Register ACF REST fields for case-study and page to ensure reliable API responses.
+     * Register ACF REST fields for case-study, page, and post to ensure reliable API responses.
      */
     public static function register_rest_fields() {
         register_rest_field('case-study', 'acf', [
@@ -148,10 +148,38 @@ class OS_Headless_Post_Types {
                     'technology_2'     => get_post_meta($post_id, 'technology_2', true) ?: '',
                     'technology_3'     => get_post_meta($post_id, 'technology_3', true) ?: '',
                     'color'            => get_post_meta($post_id, 'color', true) ?: '2563eb',
+                    'live_url'         => get_post_meta($post_id, 'live_url', true) ?: '',
+                    'client_name'      => get_post_meta($post_id, 'client_name', true) ?: '',
+                    'project_type'     => get_post_meta($post_id, 'project_type', true) ?: '',
+                    'hero_screenshot'  => get_post_meta($post_id, 'hero_screenshot', true) ?: '',
+                    'rating_value'     => get_post_meta($post_id, 'rating_value', true) ?: '5.0 / 5.0',
+                    'rating_source'    => get_post_meta($post_id, 'rating_source', true) ?: '',
+                    'review_quote'     => get_post_meta($post_id, 'review_quote', true) ?: '',
+                    'review_author'    => get_post_meta($post_id, 'review_author', true) ?: '',
                 ];
             },
             'schema' => [
                 'description' => __('Case Study ACF Fields', 'oderinde-headless'),
+                'type'        => 'object',
+            ],
+        ]);
+
+        register_rest_field('post', 'acf', [
+            'get_callback' => function($post_arr) {
+                $post_id = $post_arr['id'];
+                return [
+                    'article_type'               => get_post_meta($post_id, 'article_type', true) ?: 'Practical Guide',
+                    'experience_basis'          => get_post_meta($post_id, 'experience_basis', true) ?: 'Project-led guidance',
+                    'last_reviewed'             => get_post_meta($post_id, 'last_reviewed', true) ?: '',
+                    'reading_time'              => get_post_meta($post_id, 'reading_time', true) ?: '5 min read',
+                    'related_service_title'      => get_post_meta($post_id, 'related_service_title', true) ?: '',
+                    'related_service_description'=> get_post_meta($post_id, 'related_service_description', true) ?: '',
+                    'related_service_url'        => get_post_meta($post_id, 'related_service_url', true) ?: '/business-website-development',
+                    'review_status'             => get_post_meta($post_id, 'review_status', true) ?: 'Current and reviewed',
+                ];
+            },
+            'schema' => [
+                'description' => __('Blog Post ACF Fields', 'oderinde-headless'),
                 'type'        => 'object',
             ],
         ]);

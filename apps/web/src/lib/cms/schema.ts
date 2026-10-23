@@ -8,6 +8,8 @@ export const SiteSettingsSchema = z.object({
   siteTagline: z.string().default("Website Development & Digital Solutions"),
   bookingUrl: z.string().url().default("https://cal.com/oderinde/free"),
   contactEmail: z.string().email().default("Contact@oderindestephen.com"),
+  contactPhone: z.string().default("+44 7848 149224"),
+  contactLocation: z.string().default("London, United Kingdom & Worldwide Remote"),
   currency: z.enum(["GBP", "USD", "EUR"]).default("GBP"),
   portalUrl: z.string().url().default("https://portal.oderindestephen.com/"),
   socialLinks: z.object({
@@ -76,6 +78,14 @@ export const CaseStudyAcfSchema = z.object({
   technology_2: z.string().default(""),
   technology_3: z.string().default(""),
   color: z.string().default("2563eb"),
+  live_url: z.string().default(""),
+  client_name: z.string().default(""),
+  project_type: z.string().default(""),
+  hero_screenshot: z.string().default(""),
+  rating_value: z.string().default("5.0 / 5.0"),
+  rating_source: z.string().default(""),
+  review_quote: z.string().default(""),
+  review_author: z.string().default(""),
 });
 
 export type CaseStudyAcf = z.infer<typeof CaseStudyAcfSchema>;
@@ -100,6 +110,45 @@ export const CaseStudySchema = z.object({
 });
 
 export type CaseStudy = z.infer<typeof CaseStudySchema>;
+
+/**
+ * Schema for Blog Article ACF custom fields
+ */
+export const BlogPostAcfSchema = z.object({
+  article_type: z.string().default("Practical Guide"),
+  experience_basis: z.string().default("Project-led guidance"),
+  last_reviewed: z.string().default(""),
+  reading_time: z.string().default("5 min read"),
+  related_service_title: z.string().default(""),
+  related_service_description: z.string().default(""),
+  related_service_url: z.string().default("/business-website-development"),
+  review_status: z.string().default("Current and reviewed"),
+});
+
+export type BlogPostAcf = z.infer<typeof BlogPostAcfSchema>;
+
+/**
+ * Standard WordPress REST Post schema for /wp/v2/posts
+ */
+export const BlogPostSchema = z.object({
+  id: z.number().int().positive(),
+  slug: z.string(),
+  title: z.object({
+    rendered: z.string(),
+  }),
+  excerpt: z.object({
+    rendered: z.string(),
+  }),
+  content: z.object({
+    rendered: z.string(),
+  }).optional(),
+  date: z.string().optional().default(""),
+  modified: z.string().optional().default(""),
+  featured_media: z.number().int().optional(),
+  acf: BlogPostAcfSchema.optional().default({}),
+});
+
+export type BlogPost = z.infer<typeof BlogPostSchema>;
 
 /**
  * Public visitor contact form input schema

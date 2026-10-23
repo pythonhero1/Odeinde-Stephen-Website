@@ -1,11 +1,12 @@
 import { describe, it } from "node:test";
 import assert from "node:assert/strict";
-import { computeHmacSha256 } from "./api.ts";
+import { computeHmacSha256, getCaseStudies, getPosts } from "./api.ts";
 import {
   PageSchema,
   RevalidatePayloadSchema,
   EnquiryInputSchema,
   CmsEnquiryPayloadSchema,
+  BlogPostSchema,
 } from "./schema.ts";
 
 describe("CMS API & Web Crypto Tests", () => {
@@ -118,5 +119,40 @@ describe("CMS API & Web Crypto Tests", () => {
 
     const parsedRelay = CmsEnquiryPayloadSchema.parse(relayPayload);
     assert.equal(parsedRelay.submissionKey, "sub_1729680000_abcd1234");
+  });
+
+  it("BlogPostSchema validates published post 237 with ACF article metadata", () => {
+    const samplePost = {
+      id: 237,
+      slug: "why-wordpress-is-still-a-game-changer-for-small-businesses-in-2026",
+      title: { rendered: "Why WordPress Is Still a Game Changer for Small Businesses in 2026" },
+      excerpt: { rendered: "<p>WordPress remains one of the most practical website foundations...</p>" },
+      content: { rendered: "<p>Full content body...</p>" },
+      acf: {
+        article_type: "Practical Guide",
+        reading_time: "10 min read",
+        related_service_url: "/business-website-development",
+        review_status: "Current and reviewed",
+      },
+    };
+
+    const parsed = BlogPostSchema.parse(samplePost);
+    assert.equal(parsed.id, 237);
+    assert.equal(parsed.slug, "why-wordpress-is-still-a-game-changer-for-small-businesses-in-2026");
+    assert.equal(parsed.acf?.reading_time, "10 min read");
+    assert.equal(parsed.acf?.article_type, "Practical Guide");
+  });
+
+  it("getCaseStudies and getPosts return valid case studies and posts from CMS or fallback", async () => {
+    const caseStudies = await getCaseStudies();
+    assert.ok(Array.isArray(caseStudies));
+    assert.equal(caseStudies.length, 6);
+    const pipePatch = caseStudies.find((cs) => cs.slug.includes("pipe-patch-pro"));
+    assert.ok(pipePatch, "Pipe Patch Pro case study should be present");
+
+    const posts = await getPosts();
+    assert.ok(Array.isArray(posts));
+    assert.equal(posts.length, 1);
+    assert.equal(posts[0].id, 237);
   });
 });

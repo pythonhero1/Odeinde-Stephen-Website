@@ -129,6 +129,145 @@
             { "key": "field_ccta_button", "label": "Button Label", "name": "button_label", "type": "text" },
             { "key": "field_ccta_url", "label": "Button URL", "name": "button_url", "type": "text" }
           ]
+        },
+        "layout_pricing_packages": {
+          "key": "layout_pricing_packages",
+          "name": "pricing_packages",
+          "label": "Pricing Packages Table",
+          "display": "block",
+          "sub_fields": [
+            { "key": "field_pkg_eyebrow", "label": "Eyebrow", "name": "eyebrow", "type": "text" },
+            { "key": "field_pkg_title", "label": "Title", "name": "title", "type": "text" },
+            { "key": "field_pkg_subtitle", "label": "Subtitle", "name": "subtitle", "type": "textarea" },
+            {
+              "key": "field_pkg_items",
+              "label": "Packages",
+              "name": "packages",
+              "type": "repeater",
+              "sub_fields": [
+                { "key": "field_pkg_name", "label": "Package Name", "name": "package_name", "type": "text", "required": 1 },
+                { "key": "field_pkg_price", "label": "Starting Price (£)", "name": "price_amount", "type": "text", "required": 1 },
+                { "key": "field_pkg_desc", "label": "Description", "name": "description", "type": "textarea" },
+                { "key": "field_pkg_cta_label", "label": "CTA Label", "name": "cta_label", "type": "text" },
+                { "key": "field_pkg_cta_url", "label": "CTA URL", "name": "cta_url", "type": "text" },
+                { "key": "field_pkg_featured", "label": "Is Featured", "name": "is_featured", "type": "true_false" }
+              ]
+            }
+          ]
+        },
+        "layout_testimonials": {
+          "key": "layout_testimonials",
+          "name": "testimonials_grid",
+          "label": "Client Feedback & Testimonials",
+          "display": "block",
+          "sub_fields": [
+            { "key": "field_tst_eyebrow", "label": "Eyebrow", "name": "eyebrow", "type": "text" },
+            { "key": "field_tst_title", "label": "Title", "name": "title", "type": "text" },
+            {
+              "key": "field_tst_items",
+              "label": "Reviews",
+              "name": "items",
+              "type": "repeater",
+              "sub_fields": [
+                { "key": "field_tst_quote", "label": "Quote", "name": "quote", "type": "textarea", "required": 1 },
+                { "key": "field_tst_author", "label": "Author Name", "name": "client_name", "type": "text", "required": 1 },
+                { "key": "field_tst_role", "label": "Role / Company", "name": "client_role_company", "type": "text" },
+                { "key": "field_tst_platform", "label": "Platform", "name": "platform", "type": "text" }
+              ]
+            }
+          ]
+        },
+        "layout_process_steps": {
+          "key": "layout_process_steps",
+          "name": "process_steps",
+          "label": "Process & Roadmap Steps",
+          "display": "block",
+          "sub_fields": [
+            { "key": "field_prc_eyebrow", "label": "Eyebrow", "name": "eyebrow", "type": "text" },
+            { "key": "field_prc_title", "label": "Title", "name": "title", "type": "text" },
+            { "key": "field_prc_subtitle", "label": "Subtitle", "name": "subtitle", "type": "textarea" },
+            {
+              "key": "field_prc_steps",
+              "label": "Steps",
+              "name": "steps",
+              "type": "repeater",
+              "sub_fields": [
+                { "key": "field_prc_num", "label": "Step Number", "name": "step_number", "type": "text", "required": 1 },
+                { "key": "field_prc_stitle", "label": "Step Title", "name": "step_title", "type": "text", "required": 1 },
+                { "key": "field_prc_sdesc", "label": "Description", "name": "step_description", "type": "textarea" },
+                { "key": "field_prc_soutput", "label": "Output", "name": "key_output", "type": "text" }
+              ]
+            }
+          ]
+        },
+        "layout_problem_paths": {
+          "key": "layout_problem_paths",
+          "name": "problem_paths",
+          "label": "Diagnostic Problem Paths",
+          "display": "block",
+          "sub_fields": [
+            { "key": "field_pth_eyebrow", "label": "Eyebrow", "name": "eyebrow", "type": "text" },
+            { "key": "field_pth_title", "label": "Title", "name": "title", "type": "text" },
+            {
+              "key": "field_pth_items",
+              "label": "Paths",
+              "name": "paths",
+              "type": "repeater",
+              "sub_fields": [
+                { "key": "field_pth_num", "label": "Path Number", "name": "path_number", "type": "text" },
+                { "key": "field_pth_stmt", "label": "Statement", "name": "problem_statement", "type": "text", "required": 1 },
+                { "key": "field_pth_desc", "label": "Description", "name": "description", "type": "textarea" },
+                { "key": "field_pth_fit", "label": "Best Fit Service", "name": "fit_label", "type": "text" },
+                { "key": "field_pth_cta_label", "label": "CTA Label", "name": "cta_label", "type": "text" },
+                { "key": "field_pth_cta_url", "label": "CTA URL", "name": "cta_url", "type": "text" }
+              ]
+            }
+          ]
+        },
+        "layout_platform_comparison": {
+          "key": "layout_platform_comparison",
+          "name": "platform_comparison",
+          "label": "Platform Comparison Matrix",
+          "display": "block",
+          "sub_fields": [
+            { "key": "field_cmp_eyebrow", "label": "Eyebrow", "name": "eyebrow", "type": "text" },
+            { "key": "field_cmp_title", "label": "Title", "name": "title", "type": "text" },
+            { "key": "field_cmp_subtitle", "label": "Subtitle", "name": "subtitle", "type": "textarea" }
+          ]
+        },
+        "layout_lead_magnet": {
+          "key": "layout_lead_magnet",
+          "name": "lead_magnet",
+          "label": "Lead Magnet & Checklist",
+          "display": "block",
+          "sub_fields": [
+            { "key": "field_lm_badge", "label": "Badge", "name": "badge", "type": "text" },
+            { "key": "field_lm_title", "label": "Title", "name": "title", "type": "text" },
+            { "key": "field_lm_desc", "label": "Description", "name": "description", "type": "textarea" },
+            { "key": "field_lm_cta_label", "label": "CTA Label", "name": "cta_label", "type": "text" },
+            { "key": "field_lm_cta_url", "label": "CTA URL", "name": "cta_url", "type": "text" }
+          ]
+        },
+        "layout_blog_insights": {
+          "key": "layout_blog_insights",
+          "name": "blog_insights_grid",
+          "label": "Blog & Insights Teaser Grid",
+          "display": "block",
+          "sub_fields": [
+            { "key": "field_bi_eyebrow", "label": "Eyebrow", "name": "eyebrow", "type": "text" },
+            { "key": "field_bi_title", "label": "Title", "name": "title", "type": "text" },
+            { "key": "field_bi_limit", "label": "Post Limit", "name": "post_limit", "type": "number", "default_value": 3 }
+          ]
+        },
+        "layout_portfolio_showcase": {
+          "key": "layout_portfolio_showcase",
+          "name": "portfolio_showcase",
+          "label": "Portfolio Showcase Cards",
+          "display": "block",
+          "sub_fields": [
+            { "key": "field_ps_eyebrow", "label": "Eyebrow", "name": "eyebrow", "type": "text" },
+            { "key": "field_ps_title", "label": "Title", "name": "title", "type": "text" }
+          ]
         }
       }
     }

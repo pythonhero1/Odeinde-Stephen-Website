@@ -1,10 +1,11 @@
-import { getSiteSettings, getCaseStudies, getPageBySlug } from "@/lib/cms/api";
+import { getSiteSettings, getCaseStudies, getPosts, getPageBySlug } from "@/lib/cms/api";
 import { SectionRenderer } from "@/components/sections/SectionRenderer";
 
 export default async function HomePage() {
-  const [settings, caseStudies, pageData] = await Promise.all([
+  const [settings, caseStudies, posts, pageData] = await Promise.all([
     getSiteSettings(),
     getCaseStudies(),
+    getPosts(),
     getPageBySlug("home"),
   ]);
 
@@ -15,6 +16,7 @@ export default async function HomePage() {
       <SectionRenderer
         sections={sections}
         caseStudies={caseStudies}
+        posts={posts}
         bookingUrl={settings.bookingUrl}
       />
     </div>

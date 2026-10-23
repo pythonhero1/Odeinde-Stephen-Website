@@ -1,9 +1,12 @@
 import type { Metadata } from "next";
-import { Mail, Calendar, Clock, ShieldCheck } from "lucide-react";
+import { Mail, Calendar, Clock, ShieldCheck, MapPin, Phone } from "lucide-react";
 import { getSiteSettings } from "@/lib/cms/api";
 import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { ContactForm } from "@/components/forms/ContactForm";
+import { ContactChannelsGrid } from "@/components/contact/ContactChannelsGrid";
+import { PostEnquiryTimeline } from "@/components/contact/PostEnquiryTimeline";
+import { GlobalDeliverySection } from "@/components/contact/GlobalDeliverySection";
 
 export const metadata: Metadata = {
   title: "Contact & Project Enquiry | Oderinde Stephen",
@@ -22,15 +25,24 @@ export default async function ContactPage() {
           badgeVariant="blue"
           title="Start Your Website Project"
           highlight="Your Website Project"
-          subtitle="Let’s review your business objectives, technical scope, and project timeline. Fill in the form below or book directly into my calendar."
+          subtitle="Let’s review your business objectives, technical scope, and project timeline. Fill in the form below, book a call, or contact me through any channel."
         />
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 sm:gap-16 items-start">
-          {/* Left Column: Direct Context & Booking Shortcut (5 cols) */}
+        {/* Multi-channel contact cards */}
+        <ContactChannelsGrid
+          bookingUrl={settings.bookingUrl}
+          email={settings.contactEmail}
+          phone={settings.contactPhone}
+          location={settings.contactLocation}
+        />
+
+        {/* Main form and direct context section */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 sm:gap-16 items-start my-12">
+          {/* Left Column: Direct Context & Summary (5 cols) */}
           <div className="lg:col-span-5 space-y-6">
             <div className="p-6 sm:p-8 rounded-2xl bg-brand-surface/60 border border-brand-border space-y-6">
               <h2 className="text-xl font-bold font-heading text-white">
-                Direct Contact &amp; Options
+                Direct Contact &amp; Details
               </h2>
 
               <div className="space-y-4">
@@ -49,6 +61,23 @@ export default async function ContactPage() {
                   </div>
                 </div>
 
+                {settings.contactPhone && (
+                  <div className="flex items-start gap-3">
+                    <div className="w-9 h-9 rounded-lg bg-blue-950/80 text-brand-accent flex items-center justify-center shrink-0">
+                      <Phone className="w-4 h-4" />
+                    </div>
+                    <div>
+                      <span className="text-xs font-mono text-brand-muted block">Phone & WhatsApp</span>
+                      <a
+                        href={`tel:${settings.contactPhone.replace(/\s+/g, "")}`}
+                        className="text-sm font-semibold text-white hover:text-brand-accent transition-colors"
+                      >
+                        {settings.contactPhone}
+                      </a>
+                    </div>
+                  </div>
+                )}
+
                 <div className="flex items-start gap-3">
                   <div className="w-9 h-9 rounded-lg bg-blue-950/80 text-brand-accent flex items-center justify-center shrink-0">
                     <Calendar className="w-4 h-4" />
@@ -65,6 +94,20 @@ export default async function ContactPage() {
                     </a>
                   </div>
                 </div>
+
+                {settings.contactLocation && (
+                  <div className="flex items-start gap-3">
+                    <div className="w-9 h-9 rounded-lg bg-blue-950/80 text-brand-accent flex items-center justify-center shrink-0">
+                      <MapPin className="w-4 h-4" />
+                    </div>
+                    <div>
+                      <span className="text-xs font-mono text-brand-muted block">Location</span>
+                      <span className="text-sm text-foreground/90 font-medium">
+                        {settings.contactLocation}
+                      </span>
+                    </div>
+                  </div>
+                )}
 
                 <div className="flex items-start gap-3">
                   <div className="w-9 h-9 rounded-lg bg-blue-950/80 text-brand-accent flex items-center justify-center shrink-0">
@@ -93,6 +136,12 @@ export default async function ContactPage() {
             <ContactForm bookingUrl={settings.bookingUrl} />
           </div>
         </div>
+
+        {/* Post-enquiry process steps */}
+        <PostEnquiryTimeline />
+
+        {/* Global delivery and timezone notice */}
+        <GlobalDeliverySection />
       </Container>
     </div>
   );

@@ -13,11 +13,13 @@ import {
   Target,
   Wrench,
 } from "lucide-react";
-import { getCaseStudyBySlug, getSiteSettings } from "@/lib/cms/api";
+import { getCaseStudyBySlug, getSiteSettings, getCaseStudies } from "@/lib/cms/api";
 import { Container } from "@/components/ui/Container";
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
 import { Badge } from "@/components/ui/Badge";
+import { PipePatchProBespokeCaseStudy } from "@/components/case-study/PipePatchProBespokeCaseStudy";
+import { CaseStudyNavigation } from "@/components/case-study/CaseStudyNavigation";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -46,14 +48,36 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
 export default async function SingleCaseStudyPage({ params }: PageProps) {
   const { slug } = await params;
-  const [caseStudy, settings, draft] = await Promise.all([
+  const [caseStudy, settings, allCaseStudies, draft] = await Promise.all([
     getCaseStudyBySlug(slug),
     getSiteSettings(),
+    getCaseStudies(),
     draftMode(),
   ]);
 
   if (!caseStudy) {
     notFound();
+  }
+
+  const isBespokePipePatch =
+    slug === "pipe-patch-pro-amazon-listing-website" || slug === "pipe-patch-pro";
+
+  if (isBespokePipePatch) {
+    return (
+      <div className="w-full">
+        {draft.isEnabled && (
+          <div className="w-full bg-amber-500/20 border-b border-amber-500/40 text-amber-300 px-4 py-2 text-xs font-mono text-center flex items-center justify-center gap-2">
+            <span className="w-2 h-2 rounded-full bg-amber-400 animate-pulse" />
+            <span>DRAFT MODE ACTIVE • Unpublished preview rendering • Search indexing disabled</span>
+            <a href="/api/preview-exit" className="underline ml-2 hover:text-white transition-colors">
+              Exit Preview
+            </a>
+          </div>
+        )}
+        <PipePatchProBespokeCaseStudy bookingUrl={settings.bookingUrl} />
+        <CaseStudyNavigation currentSlug={slug} allCaseStudies={allCaseStudies} />
+      </div>
+    );
   }
 
   const acf = caseStudy.acf || {};
@@ -255,6 +279,8 @@ export default async function SingleCaseStudyPage({ params }: PageProps) {
           </aside>
         </div>
       </Container>
+
+      <CaseStudyNavigation currentSlug={slug} allCaseStudies={allCaseStudies} />
     </article>
   );
 }
