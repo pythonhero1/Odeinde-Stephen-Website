@@ -1,0 +1,57 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    name: Build, Lint, Test & Validate
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout Source
+        uses: actions/checkout@v4
+
+      - name: Set up Python for Memory Check
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Set up Node.js LTS
+        uses: actions/setup-node@v4
+        with:
+          node-version: "24.x"
+          cache: "npm"
+
+      - name: Clean Install Dependencies
+        run: npm ci
+
+      - name: Kit Integrity Check
+        run: node tools/check-kit.mjs
+
+      - name: Memory Integrity Check
+        run: python3 tools/check-memory.py
+
+      - name: ESLint Code Quality
+        run: npm --prefix apps/web run lint
+
+      - name: TypeScript Strict Typecheck
+        run: npm --prefix apps/web run typecheck
+
+      - name: Unit Tests
+        run: npm --prefix apps/web run test
+
+      - name: Production Build Verification
+        env:
+          NEXT_PUBLIC_SITE_URL: "https://oderindestephen.com"
+          WP_API_ORIGIN: "https://cms.oderindestephen.com"
+          CMS_MEDIA_ORIGIN: "https://cms.oderindestephen.com"
+        run: npm --prefix apps/web run build

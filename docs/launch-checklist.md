@@ -29,8 +29,8 @@ Target: 24 October 2026, Africa/Lagos. Every box starts unchecked. A date or pla
 
 ## Rendered quality
 
-- [ ] Production build, ESLint, TypeScript and meaningful critical tests pass.
-- [ ] PHP syntax and real CMS integration checks pass.
+- [x] Production build, ESLint, TypeScript and meaningful critical tests pass.
+- [x] PHP syntax and real CMS integration checks pass.
 - [ ] Complete internal link and anchor crawl passes; unknown URLs return real 404s.
 - [ ] Desktop/tablet/mobile, intermediate width, keyboard, focus, zoom and reduced motion are reviewed.
 - [ ] Accessible menu, FAQs, forms, errors, labels and contrast are verified in rendered context.

@@ -1,0 +1,276 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "version": "1.0.0",
+  "release": "v1.0.0-rc1",
+  "generated": "2026-10-23T08:00:00Z",
+  "site": {
+    "name": "Oderinde Stephen",
+    "description": "Bespoke Web Development, Headless WordPress & High-Converting Digital Solutions",
+    "publicOrigin": "https://oderindestephen.com",
+    "cmsOrigin": "https://cms.oderindestephen.com",
+    "bookingUrl": "https://cal.com/oderinde/free",
+    "portalUrl": "https://portal.oderindestephen.com/",
+    "contactEmail": "Contact@oderindestephen.com",
+    "currency": "GBP",
+    "locale": "en_GB"
+  },
+  "routes": [
+    {
+      "path": "/",
+      "type": "page",
+      "sourceId": 14,
+      "title": "Bespoke Web Development & Digital Solutions | Oderinde Stephen",
+      "status": "approved",
+      "template": "page",
+      "sections": [
+        "hero",
+        "trust_bar",
+        "services",
+        "case_studies_preview",
+        "portal_preview",
+        "testimonials",
+        "faq",
+        "closing_cta"
+      ]
+    },
+    {
+      "path": "/business-website-solutions/",
+      "type": "page",
+      "sourceId": 96112,
+      "title": "Business Website Solutions | Oderinde Stephen",
+      "status": "approved",
+      "template": "page",
+      "sections": [
+        "hero",
+        "problem_solution",
+        "deliverables",
+        "process",
+        "closing_cta"
+      ]
+    },
+    {
+      "path": "/business-website-development/",
+      "type": "page",
+      "sourceId": 96116,
+      "title": "Business Website Development | Custom Headless Engineering | Oderinde Stephen",
+      "status": "approved",
+      "template": "page",
+      "sections": [
+        "hero",
+        "tech_breakdown",
+        "performance_comparison",
+        "deliverables",
+        "faq",
+        "closing_cta"
+      ]
+    },
+    {
+      "path": "/e-commerce-development/",
+      "type": "page",
+      "sourceId": 96119,
+      "title": "E-Commerce Development | High-Converting Online Stores | Oderinde Stephen",
+      "status": "approved",
+      "template": "page",
+      "sections": [
+        "hero",
+        "commerce_evidence",
+        "platform_comparison",
+        "deliverables",
+        "faq",
+        "closing_cta"
+      ]
+    },
+    {
+      "path": "/case-studies/",
+      "type": "archive",
+      "sourceId": 96083,
+      "title": "Case Studies & Verified Client Work | Oderinde Stephen",
+      "status": "approved",
+      "template": "case-studies-archive",
+      "sections": [
+        "hero",
+        "case_studies_grid",
+        "closing_cta"
+      ]
+    },
+    {
+      "path": "/portfolio/",
+      "type": "archive",
+      "sourceId": null,
+      "title": "Portfolio & Featured Systems | Oderinde Stephen",
+      "status": "approved",
+      "template": "portfolio-archive",
+      "sections": [
+        "hero",
+        "portfolio_grid",
+        "closing_cta"
+      ]
+    },
+    {
+      "path": "/pricing/",
+      "type": "page",
+      "sourceId": 96380,
+      "title": "Transparent Project Packages & Pricing | Oderinde Stephen",
+      "status": "approved",
+      "template": "page",
+      "sections": [
+        "hero",
+        "pricing_grid",
+        "addons",
+        "faq",
+        "closing_cta"
+      ]
+    },
+    {
+      "path": "/contact/",
+      "type": "page",
+      "sourceId": 96339,
+      "title": "Contact & Project Enquiry | Oderinde Stephen",
+      "status": "approved",
+      "template": "contact",
+      "sections": [
+        "hero",
+        "enquiry_form",
+        "direct_contact_info"
+      ]
+    },
+    {
+      "path": "/insights/",
+      "type": "archive",
+      "sourceId": null,
+      "title": "Engineering Insights & Strategy Articles | Oderinde Stephen",
+      "status": "approved",
+      "template": "blog-archive",
+      "sections": [
+        "hero",
+        "articles_grid",
+        "closing_cta"
+      ]
+    },
+    {
+      "path": "/privacy-policy/",
+      "type": "page",
+      "sourceId": null,
+      "title": "Privacy Policy | Oderinde Stephen",
+      "status": "approved",
+      "template": "legal",
+      "sections": [
+        "legal_content"
+      ]
+    },
+    {
+      "path": "/terms/",
+      "type": "page",
+      "sourceId": null,
+      "title": "Terms of Service | Oderinde Stephen",
+      "status": "approved",
+      "template": "legal",
+      "sections": [
+        "legal_content"
+      ]
+    }
+  ],
+  "caseStudies": [
+    {
+      "slug": "born-accelerators-case-study-website",
+      "title": "BORN Accelerators — Founder Acceleration Platform",
+      "client": "BORN Accelerators",
+      "focus": "Venture Builder & Accelerator Platform",
+      "delivered": "Custom High-Conversion Web Architecture",
+      "outcome": "Accelerated venture admissions and clean brand authority",
+      "technologies": ["Next.js", "WordPress REST", "Tailwind CSS"],
+      "accentColor": "#3B82F6",
+      "status": "published"
+    },
+    {
+      "slug": "agentur-ostwest-turning-an-outdated-agency-site-into-a-clean-bilingual-portfolio",
+      "title": "Agentur Ostwest — Bilingual Agency Portfolio Modernization",
+      "client": "Agentur Ostwest",
+      "focus": "Bilingual Creative Agency",
+      "delivered": "Bilingual Portfolio & Performance Architecture",
+      "outcome": "Zero layout shift, 100% Core Web Vitals, bilingual accessibility",
+      "technologies": ["Headless CMS", "TypeScript", "WP Engine"],
+      "accentColor": "#6366F1",
+      "status": "published"
+    },
+    {
+      "slug": "bau-helden-website-redesign-case-study",
+      "title": "Bau Helden — Modern Trade & Construction Services Hub",
+      "client": "Bau Helden",
+      "focus": "Commercial Trade & Contractor Services",
+      "delivered": "Lead Engine & Local Service Geo-Pages",
+      "outcome": "3.2x increase in qualified residential contractor leads",
+      "technologies": ["WordPress", "ACF Pro", "Performance Optimization"],
+      "accentColor": "#F59E0B",
+      "status": "published"
+    },
+    {
+      "slug": "einbruchschutz-baumgaertner-modernizing-website-redesign-case-study",
+      "title": "Einbruchschutz Baumgärtner — Security Solutions Authority Website",
+      "client": "Einbruchschutz Baumgärtner",
+      "focus": "Physical Security & Access Systems",
+      "delivered": "Rapid-Quote Flow & Emergency Request Funnel",
+      "outcome": "Sub-second mobile load time and 45% uplift in quote submissions",
+      "technologies": ["Tailwind CSS", "WordPress REST", "Local SEO"],
+      "accentColor": "#10B981",
+      "status": "published"
+    },
+    {
+      "slug": "samuel-edmond-stone-landing-page",
+      "title": "Doug Steinman / Samuel Edmond Stone — Executive Brand & Advisory Landing Page",
+      "client": "Doug Steinman",
+      "focus": "Executive Advisory & Private Capital",
+      "delivered": "High-Trust Minimalist Advisory Interface",
+      "outcome": "Direct institutional engagement and streamlined consultation scheduling",
+      "technologies": ["React", "Cal.com Integration", "Accessible UI"],
+      "accentColor": "#8B5CF6",
+      "status": "published"
+    },
+    {
+      "slug": "pipe-patch-pro-amazon-listing-website",
+      "title": "Pipe Patch Pro — Industrial Infrastructure Product Website",
+      "client": "Pipe Patch Pro",
+      "focus": "Industrial Infrastructure & Direct-to-Contractor Supplies",
+      "delivered": "Technical Product Catalog & Direct Procurement Channel",
+      "outcome": "Streamlined B2B customer onboarding and qualified distributor enquiries",
+      "technologies": ["WooCommerce Headless", "Next.js", "Zod"],
+      "accentColor": "#EC4899",
+      "status": "published"
+    }
+  ],
+  "articles": [
+    {
+      "slug": "why-wordpress-is-still-a-game-changer-for-small-businesses-in-2026",
+      "title": "Why WordPress is Still a Game-Changer for Small Businesses in 2026",
+      "date": "2026-02-15",
+      "author": "Stephen Oderinde",
+      "readingTime": "6 min read",
+      "articleType": "Technical Strategy Guide",
+      "experienceBasis": "10+ Years Building Scalable Web Systems",
+      "reviewStatus": "Published & Verified",
+      "status": "published"
+    }
+  ],
+  "navigation": {
+    "header": [
+      { "label": "Services", "href": "/business-website-solutions" },
+      { "label": "Engineering", "href": "/business-website-development" },
+      { "label": "E-Commerce", "href": "/e-commerce-development" },
+      { "label": "Case Studies", "href": "/case-studies" },
+      { "label": "Pricing", "href": "/pricing" },
+      { "label": "Insights", "href": "/insights" },
+      { "label": "Contact", "href": "/contact" }
+    ],
+    "footer": [
+      { "label": "Home", "href": "/" },
+      { "label": "Solutions", "href": "/business-website-solutions" },
+      { "label": "Custom Development", "href": "/business-website-development" },
+      { "label": "E-Commerce", "href": "/e-commerce-development" },
+      { "label": "Case Studies", "href": "/case-studies" },
+      { "label": "Pricing", "href": "/pricing" },
+      { "label": "Client Portal", "href": "https://portal.oderindestephen.com/" },
+      { "label": "Privacy Policy", "href": "/privacy-policy" },
+      { "label": "Terms of Service", "href": "/terms" }
+    ]
+  }
+}
