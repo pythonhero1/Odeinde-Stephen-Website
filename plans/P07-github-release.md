@@ -1,7 +1,7 @@
 # P07: Verified GitHub Release and Clean Build Reproduction
 
 - Task: P07
-- Status: IN PROGRESS
+- Status: IMPLEMENTED - AWAITING STEPHEN CONFIRMATION
 - Created: 2026-10-23
 - Updated: 2026-10-23
 - Repository: oderindestephen-headless
@@ -160,6 +160,16 @@ All gaps have been audited via live checks and subagent review. The implementati
 - **2026-10-23 07:54**: Tested `next build`. Static generation succeeded for 21/21 routes, but identified App Router missing `global-error.tsx` (causing 500 rename ENOENT) and Rank Math JSON-LD array `@type` Zod warning.
 - **2026-10-23 07:59**: Kit check (`tools/check-kit.mjs`) passed 376 integrity checks; memory check (`tools/check-memory.py`) passed 7/7 checks.
 - **2026-10-23 08:00**: Identified scope gaps: missing `.github/workflows/ci.yml`, missing `content/approved/` directory, uncreated pre-migration tag. Formulated plan `plans/P07-github-release.md`.
+- **2026-10-23 09:09**: Stephen explicitly approved Phase 07 plan with "APPROVE".
+- **2026-10-23 09:10**: Created `apps/web/src/app/global-error.tsx` providing branded root error boundary with accessible Link recovery CTA.
+- **2026-10-23 09:11**: Created `content/approved/manifest.json` cataloging all 11 core routes, 6 case studies, 1 blog post, global site settings, and Cal.com URL, plus `content/approved/README.md`.
+- **2026-10-23 09:12**: Created `.github/workflows/ci.yml` automating clean install, kit check, memory check, lint, typecheck, tests, and build on Ubuntu.
+- **2026-10-23 09:13**: Ran full verification suite: `lint` passed with 0 errors/warnings, `typecheck` passed with 0 errors, `test` passed all 34 unit tests.
+- **2026-10-23 09:15**: Executed production build (`npm.cmd --prefix apps/web run build`): exited code 0, 28/28 static pages generated cleanly.
+- **2026-10-23 09:18**: Executed clean build reproduction check (`tools/check-kit.mjs`, `tools/check-memory.py`, `next build`): all passed with exit code 0.
+- **2026-10-23 09:19**: Performed secret boundary audit: verified zero secrets, database dumps, or binaries tracked.
+- **2026-10-23 09:20**: Committed release candidate `782fd92`, created annotated tag `v1.0.0-rc1`, and pushed both commit and tag to remote `https://github.com/pythonhero1/Odeinde-Stephen-Website.git`.
+- **2026-10-23 09:20**: Compiled `docs/release-readiness.md` and updated `docs/launch-checklist.md`.
 
 ## 11. Deviations
 
@@ -170,14 +180,15 @@ All gaps have been audited via live checks and subagent review. The implementati
 
 ## 12. Memory written
 
-None yet. Will record release tag and verified commit hash upon Stephen's approval and execution.
+None required. Followed existing decisions `D-13` (continuous GitHub push) and `P-4`.
 
 ## 13. For Stephen to confirm
 
-1. Review and approve `plans/P07-github-release.md` with `APPROVE` or `APPROVE WITH CHANGES`.
-2. Confirm the pre-migration release tag naming (`v1.0.0-rc1`).
-3. Confirm permission to push the verified release commit and tag to `https://github.com/pythonhero1/Odeinde-Stephen-Website.git`.
+1. Inspect pushed GitHub release at `https://github.com/pythonhero1/Odeinde-Stephen-Website.git` (commit `782fd92`).
+2. Verify tag `v1.0.0-rc1` is visible in GitHub Releases / Tags.
+3. Verify that `docs/release-readiness.md` accurately documents test and build evidence.
+4. Confirm Phase 07 completion with "tested and working" to proceed to Phase 08 (Remote Staging and CMS Cutover Preparation).
 
 ## 14. Backend or external handoff
 
-Upon completion of Phase 07, the verified commit hash and tag `v1.0.0-rc1` will serve as the immutable release identifier for Phase 08 (Remote Staging and CMS Cutover Preparation). No credentials or secrets are committed.
+Verified commit `782fd92` and tag `v1.0.0-rc1` represent the immutable pre-migration baseline. Remote deployment in Phase 08 will deploy directly from this tag to Cloudflare Pages.

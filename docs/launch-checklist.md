@@ -46,7 +46,7 @@ Target: 24 October 2026, Africa/Lagos. Every box starts unchecked. A date or pla
 - [ ] Sitemap has only canonical public indexable URLs; robots and Search Console settings verified.
 - [ ] Existing valuable paths, redirects and old `/wp-content/uploads/` image URLs continue to resolve.
 - [ ] CMS origin and media reachable from the deployed frontend; no `.local` origin in remote settings.
-- [ ] Complete locally tested release is pushed to GitHub; remote commit/tag verified before migration.
+- [x] Complete locally tested release is pushed to GitHub; remote commit/tag verified before migration.
 - [ ] Protected remote preview uses the intended release and real remote CMS, with all critical checks passing.
 - [ ] Frontend hosting budget/spend settings approved; CMS space/limits/SSL verified.
 - [ ] Backup restore tested; untouched original installation and recorded DNS rollback targets retained.
