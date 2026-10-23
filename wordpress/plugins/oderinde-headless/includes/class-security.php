@@ -19,13 +19,26 @@ class OS_Headless_Security {
      * @return string
      */
     public static function get_secret($constant_name, $default = '') {
-        if (defined($constant_name)) {
-            return constant($constant_name);
-        }
+        $aliases = [
+            'OS_PREVIEW_SECRET'      => ['PREVIEW_SIGNING_SECRET', 'OS_PREVIEW_SECRET'],
+            'PREVIEW_SIGNING_SECRET' => ['PREVIEW_SIGNING_SECRET', 'OS_PREVIEW_SECRET'],
+            'OS_CMS_BRIDGE_SECRET'   => ['CMS_BRIDGE_SECRET', 'OS_CMS_BRIDGE_SECRET'],
+            'CMS_BRIDGE_SECRET'      => ['CMS_BRIDGE_SECRET', 'OS_CMS_BRIDGE_SECRET'],
+            'OS_REVALIDATION_SECRET' => ['REVALIDATION_SECRET', 'OS_REVALIDATION_SECRET'],
+            'REVALIDATION_SECRET'    => ['REVALIDATION_SECRET', 'OS_REVALIDATION_SECRET'],
+            'OS_FRONTEND_ORIGIN'     => ['NEXT_PUBLIC_SITE_ORIGIN', 'FRONTEND_ORIGIN', 'OS_FRONTEND_ORIGIN'],
+        ];
 
-        $env_val = getenv($constant_name);
-        if ($env_val !== false && $env_val !== '') {
-            return $env_val;
+        $keys_to_check = isset($aliases[$constant_name]) ? $aliases[$constant_name] : [$constant_name];
+
+        foreach ($keys_to_check as $key) {
+            if (defined($key)) {
+                return constant($key);
+            }
+            $env_val = getenv($key);
+            if ($env_val !== false && $env_val !== '') {
+                return $env_val;
+            }
         }
 
         return $default;

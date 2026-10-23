@@ -14,9 +14,9 @@
     "typecheck": "npm.cmd --prefix apps/web run typecheck",
     "test": "npm.cmd --prefix apps/web run test",
     "test:e2e": "npm.cmd --prefix apps/web run test:e2e",
-    "php:lint": "powershell -NoProfile -Command \"$php = \\\"$env:APPDATA\\Local\\lightning-services\\php-8.2.29+0\\bin\\win64\\php.exe\\\"; Get-ChildItem -Path wordpress -Filter *.php -Recurse | ForEach-Object { & $php -l $_.FullName }\"",
+    "php:lint": "powershell -NoProfile -Command \"$php = (Get-ChildItem -Path \\\"$env:APPDATA\\Local\\lightning-services\\\", \\\"$env:LOCALAPPDATA\\Programs\\Local\\resources\\extraResources\\lightning-services\\\" -Filter \\\"php.exe\\\" -Recurse -ErrorAction SilentlyContinue | Select-Object -ExpandProperty FullName -First 1); if (-not $php) { $php = 'php' }; Get-ChildItem -Path wordpress -Filter *.php -Recurse | ForEach-Object { & $php -l $_.FullName }\"",
     "kit:check": "node tools/check-kit.mjs",
-    "memory:check": "py -3 tools/check-memory.py"
+    "memory:check": "python tools/check-memory.py"
   },
   "engines": {
     "node": ">=20.0.0",

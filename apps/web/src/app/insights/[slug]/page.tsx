@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { notFound } from "next/navigation";
 import { draftMode } from "next/headers";
 import { getPostBySlug, getPosts, getSiteSettings } from "@/lib/cms/api";
 import { constructPageMetadata } from "@/lib/seo/metadata";
-import { getRankMathSeo } from "@/lib/seo/rankmath";
+import { getRankMathSeo, translateOrigins } from "@/lib/seo/rankmath";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { Container } from "@/components/ui/Container";
 import { BlogArticleHeader } from "@/components/blog/BlogArticleHeader";
@@ -56,9 +57,15 @@ export default async function SingleInsightPage({ params }: PageProps) {
     <div className="py-12 sm:py-20 flex-1">
       <JsonLd nodes={seo.jsonLd} />
       {draft.isEnabled && (
-        <div className="w-full bg-amber-500/20 border-b border-amber-500/40 text-amber-300 px-4 py-2 text-xs font-mono text-center flex items-center justify-center gap-2 mb-8">
+        <div className="w-full bg-amber-500/20 border-b border-amber-500/40 text-amber-300 px-4 py-2 text-xs font-mono text-center flex items-center justify-center gap-3 mb-8">
           <span className="w-2 h-2 rounded-full bg-amber-400 animate-pulse" />
-          <span>PREVIEW DRAFT ACTIVE - Unpublished / Preview content displayed securely.</span>
+          <span>PREVIEW DRAFT ACTIVE - Unpublished content displayed securely.</span>
+          <Link
+            href="/api/preview-exit"
+            className="underline hover:text-white font-bold ml-2"
+          >
+            Exit Preview
+          </Link>
         </div>
       )}
 
@@ -81,7 +88,7 @@ export default async function SingleInsightPage({ params }: PageProps) {
               prose-blockquote:border-l-4 prose-blockquote:border-blue-500 prose-blockquote:pl-4 prose-blockquote:italic prose-blockquote:text-slate-300 prose-blockquote:my-6
               prose-code:text-blue-300 prose-code:bg-slate-900 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:font-mono prose-code:text-xs
               prose-pre:bg-slate-950 prose-pre:border prose-pre:border-slate-800 prose-pre:p-4 prose-pre:rounded-xl"
-            dangerouslySetInnerHTML={{ __html: post.content?.rendered || "" }}
+            dangerouslySetInnerHTML={{ __html: translateOrigins(post.content?.rendered || "") }}
           />
 
           {/* Contextual CTA for web engineering consultation */}

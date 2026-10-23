@@ -44,7 +44,7 @@ export const RobotsDataSchema = z.object({
 });
 
 export const JsonLdNodeSchema = z.object({
-  "@type": z.string(),
+  "@type": z.union([z.string(), z.array(z.string())]),
   "@id": z.string().optional(),
 }).passthrough();
 

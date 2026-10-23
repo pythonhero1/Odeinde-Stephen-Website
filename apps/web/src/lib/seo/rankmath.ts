@@ -120,7 +120,8 @@ export function deduplicateJsonLdGraph(nodes: JsonLdNode[]): JsonLdNode[] {
       translateOrigins(JSON.stringify(rawNode))
     ) as JsonLdNode;
 
-    const nodeType = String(translatedNode["@type"] || "");
+    const rawType = translatedNode["@type"];
+    const types = Array.isArray(rawType) ? rawType.map(String) : [String(rawType || "")];
     const nodeId = String(translatedNode["@id"] || "");
 
     if (nodeId && seenIds.has(nodeId)) {
@@ -128,11 +129,25 @@ export function deduplicateJsonLdGraph(nodes: JsonLdNode[]): JsonLdNode[] {
     }
 
     // Singular entities: allow at most one Organization, WebSite, BreadcrumbList
-    if (nodeType === "Organization" || nodeType === "WebSite" || nodeType === "BreadcrumbList") {
-      if (seenTypes.has(nodeType)) {
-        continue;
+    const singularTypes = ["Organization", "WebSite", "BreadcrumbList"];
+    let isDuplicateSingular = false;
+    for (const t of types) {
+      if (singularTypes.includes(t)) {
+        if (seenTypes.has(t)) {
+          isDuplicateSingular = true;
+          break;
+        }
       }
-      seenTypes.add(nodeType);
+    }
+
+    if (isDuplicateSingular) {
+      continue;
+    }
+
+    for (const t of types) {
+      if (singularTypes.includes(t)) {
+        seenTypes.add(t);
+      }
     }
 
     if (nodeId) {

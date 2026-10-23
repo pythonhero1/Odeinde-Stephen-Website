@@ -1,5 +1,5 @@
 import type { MetadataRoute } from "next";
-import { getCaseStudies, getPosts } from "@/lib/cms/api";
+import { getCaseStudies, getPosts } from "../lib/cms/api.ts";
 
 const BASE_URL = process.env.NEXT_PUBLIC_SITE_ORIGIN || "https://oderindestephen.com";
 

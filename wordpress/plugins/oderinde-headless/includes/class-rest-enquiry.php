@@ -61,16 +61,7 @@ class OS_Headless_REST_Enquiry {
             return new WP_Error('invalid_payload', __('Invalid JSON payload', 'oderinde-headless'), ['status' => 400]);
         }
 
-        // 1. IP Rate Limiting via Transients
-        $ip = $_SERVER['REMOTE_ADDR'] ?? '127.0.0.1';
-        $rate_key = 'os_rate_' . md5($ip);
-        $attempts = (int) get_transient($rate_key);
-        if ($attempts >= 10) {
-            return new WP_Error('rate_limited', __('Too many submissions. Please wait a few minutes.', 'oderinde-headless'), ['status' => 429]);
-        }
-        set_transient($rate_key, $attempts + 1, 60);
-
-        // 2. Idempotency Check
+        // 1. Idempotency Check
         $submission_key = sanitize_text_field($params['submissionKey'] ?? '');
         if (!empty($submission_key)) {
             $existing_id = get_transient('os_sub_' . md5($submission_key));

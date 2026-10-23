@@ -28,7 +28,11 @@ export async function POST(req: NextRequest) {
     }
 
     // Server-to-server relay with unique idempotency submissionKey
-    const submissionKey = `sub_${Date.now()}_${crypto.randomUUID().slice(0, 8)}`;
+    const submissionKey =
+      json.submissionKey && typeof json.submissionKey === "string"
+        ? json.submissionKey
+        : `sub_${Date.now()}_${crypto.randomUUID().slice(0, 8)}`;
+
     const result = await submitEnquiryToCms({
       ...fields,
       submissionKey,
@@ -38,6 +42,7 @@ export async function POST(req: NextRequest) {
       {
         success: true,
         enquiryId: result.enquiryId,
+        submissionKey,
         message: "Thank you for reaching out. Your enquiry has been received.",
       },
       { status: 201 }

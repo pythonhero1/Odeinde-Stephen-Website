@@ -50,6 +50,7 @@ export function Navbar({ items }: NavbarProps) {
           <Link
             key={item.path}
             href={item.path}
+            aria-current={isActive ? "page" : undefined}
             className={`px-3.5 py-1.5 rounded-full text-sm font-medium font-heading transition-colors ${
               isActive
                 ? "text-white bg-brand-card shadow-sm border border-brand-border/40"

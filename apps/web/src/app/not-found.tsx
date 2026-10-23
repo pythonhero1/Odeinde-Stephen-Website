@@ -6,6 +6,7 @@ import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
 import { ArrowLeft, ArrowRight, Compass, Home, Layers, Mail, Calendar } from "lucide-react";
+import { DEFAULT_SITE_SETTINGS } from "@/lib/cms/cache";
 
 export const metadata: Metadata = {
   title: "404 - Page Not Found | Oderinde Stephen",
@@ -63,7 +64,7 @@ export default function NotFound() {
               <Home className="w-4 h-4 mr-2" /> Return to Homepage
             </Button>
             <Button
-              href="https://cal.com/oderinde/free"
+              href={DEFAULT_SITE_SETTINGS.bookingUrl}
               isExternal
               variant="outline"
               size="lg"

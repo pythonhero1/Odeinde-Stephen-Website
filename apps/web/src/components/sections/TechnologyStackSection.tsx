@@ -39,7 +39,7 @@ const platforms: PlatformInfo[] = [
     name: "Next.js & Cloudflare",
     role: "Modern Modern Performance Architecture",
     description: "Lightning-fast static regeneration (ISR) and server-side edge rendering delivering sub-second load times and rock-solid security.",
-    iconSrc: "/images/framer-website-platform-icon.png",
+    iconSrc: "/images/nextjs-platform-icon.svg",
     strengths: ["Sub-second page loads", "Edge CDN global caching", "Bank-grade security"],
   },
 ];

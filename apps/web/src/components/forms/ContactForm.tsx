@@ -1,6 +1,7 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect, Suspense } from "react";
+import { useSearchParams } from "next/navigation";
 import { Send, CheckCircle2, AlertCircle, Loader2, Calendar } from "lucide-react";
 import {
   EnquiryInputSchema,
@@ -14,7 +15,8 @@ interface ContactFormProps {
   bookingUrl: string;
 }
 
-export function ContactForm({ bookingUrl }: ContactFormProps) {
+function ContactFormInner({ bookingUrl }: ContactFormProps) {
+  const searchParams = useSearchParams();
   const [formData, setFormData] = useState<Partial<EnquiryInput>>({
     name: "",
     email: "",
@@ -26,6 +28,41 @@ export function ContactForm({ bookingUrl }: ContactFormProps) {
     message: "",
     honeypot: "",
   });
+
+  const [clientKey, setClientKey] = useState("");
+
+  useEffect(() => {
+    setClientKey(`cl_${Date.now()}_${Math.random().toString(36).slice(2, 9)}`);
+
+    const serviceParam = searchParams.get("service")?.toLowerCase();
+    const interestParam = searchParams.get("interest")?.toLowerCase();
+
+    setFormData((prev) => {
+      let matchedService = prev.service;
+      let initialMessage = prev.message;
+
+      if (serviceParam) {
+        if (serviceParam.includes("e-commerce") || serviceParam.includes("ecommerce")) {
+          matchedService = SERVICE_OPTIONS[2];
+        } else if (serviceParam.includes("dev") || serviceParam.includes("wordpress")) {
+          matchedService = SERVICE_OPTIONS[1];
+        } else if (serviceParam.includes("solution")) {
+          matchedService = SERVICE_OPTIONS[0];
+        }
+      }
+
+      if (interestParam === "checklist") {
+        initialMessage =
+          "Hello Stephen, I would like to request the Website Review Checklist & Guide, and discuss recommendations for my project.";
+      }
+
+      return {
+        ...prev,
+        service: matchedService,
+        message: initialMessage,
+      };
+    });
+  }, [searchParams]);
 
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
@@ -79,7 +116,10 @@ export function ContactForm({ bookingUrl }: ContactFormProps) {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(result.data),
+        body: JSON.stringify({
+          ...result.data,
+          submissionKey: clientKey || undefined,
+        }),
       });
 
       const data = await res.json().catch(() => ({}));
@@ -384,5 +424,19 @@ export function ContactForm({ bookingUrl }: ContactFormProps) {
         </button>
       </div>
     </form>
+  );
+}
+
+export function ContactForm({ bookingUrl }: ContactFormProps) {
+  return (
+    <Suspense
+      fallback={
+        <div className="p-8 sm:p-10 rounded-2xl bg-brand-surface/40 border border-brand-border/60 text-center animate-pulse">
+          <p className="text-sm font-mono text-brand-muted">Loading enquiry form...</p>
+        </div>
+      }
+    >
+      <ContactFormInner bookingUrl={bookingUrl} />
+    </Suspense>
   );
 }

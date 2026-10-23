@@ -140,3 +140,33 @@ test("getStaticFallbackSeo returns complete metadata and schema for core routes"
   assert.equal(pricingFallback.canonical, "https://oderindestephen.com/pricing");
   assert.ok(pricingFallback.jsonLd.some((n) => n["@type"] === "PriceSpecification"));
 });
+
+test("deduplicateJsonLdGraph handles multi-type array @type correctly", () => {
+  const nodes = [
+    {
+      "@type": ["Person", "Organization"],
+      "@id": "http://localhost:10004/#person-org",
+      name: "Oderinde Stephen",
+    },
+    {
+      "@type": "Organization",
+      "@id": "http://localhost:10004/#organization-dup",
+      name: "Duplicate Org",
+    },
+    {
+      "@type": ["WebPage", "ContactPage"],
+      "@id": "http://localhost:10004/contact/#webpage",
+      name: "Contact Page",
+    },
+  ];
+
+  const result = deduplicateJsonLdGraph(nodes);
+
+  // The first node has ["Person", "Organization"], claiming the Organization slot
+  // The second node is pure "Organization" and must be dropped as duplicate
+  // The third node has ["WebPage", "ContactPage"] and should be kept
+  assert.equal(result.length, 2);
+  assert.deepEqual(result[0]["@type"], ["Person", "Organization"]);
+  assert.equal(result[0]["@id"], "https://oderindestephen.com/#person-org");
+  assert.deepEqual(result[1]["@type"], ["WebPage", "ContactPage"]);
+});

@@ -37,7 +37,7 @@ export interface RobotsData {
 }
 
 export interface JsonLdNode {
-  "@type": string;
+  "@type": string | string[];
   "@id"?: string;
   [key: string]: unknown;
 }

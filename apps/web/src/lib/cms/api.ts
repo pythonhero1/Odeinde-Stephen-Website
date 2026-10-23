@@ -397,6 +397,7 @@ export async function submitEnquiryToCms(payload: CmsEnquiryPayload): Promise<{
     },
     body: rawBody,
     cache: "no-store",
+    signal: AbortSignal.timeout(8000),
   });
 
   const data = await res.json().catch(() => ({}));

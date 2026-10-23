@@ -88,28 +88,28 @@ export function ClientFeedbackSection() {
         {/* Platform Verification Bar */}
         <div className="p-6 rounded-2xl bg-slate-900/40 border border-slate-800 flex flex-wrap items-center justify-around gap-6 text-center">
           <div className="flex items-center gap-3">
-            <Image src="/images/clutch-review-platform-icon.png" alt="Clutch" width={32} height={32} className="object-contain" />
+            <Image src="/images/clutch-review-platform-icon.png" alt="" aria-hidden="true" width={32} height={32} className="object-contain" />
             <div className="text-left">
               <span className="text-white font-bold text-xs block">Clutch</span>
               <span className="text-slate-500 text-[11px]">Verified Reviews</span>
             </div>
           </div>
           <div className="flex items-center gap-3">
-            <Image src="/images/trustpilot-review-platform-icon.png" alt="Trustpilot" width={32} height={32} className="object-contain" />
+            <Image src="/images/trustpilot-review-platform-icon.png" alt="" aria-hidden="true" width={32} height={32} className="object-contain" />
             <div className="text-left">
               <span className="text-white font-bold text-xs block">Trustpilot</span>
               <span className="text-slate-500 text-[11px]">5-Star Customer Rating</span>
             </div>
           </div>
           <div className="flex items-center gap-3">
-            <Image src="/images/google-reviews-icon.png" alt="Google" width={32} height={32} className="object-contain" />
+            <Image src="/images/google-reviews-icon.png" alt="" aria-hidden="true" width={32} height={32} className="object-contain" />
             <div className="text-left">
               <span className="text-white font-bold text-xs block">Google Business</span>
               <span className="text-slate-500 text-[11px]">London Profile</span>
             </div>
           </div>
           <div className="flex items-center gap-3">
-            <Image src="/images/g2-review-platform-icon.png" alt="G2" width={32} height={32} className="object-contain" />
+            <Image src="/images/g2-review-platform-icon.png" alt="" aria-hidden="true" width={32} height={32} className="object-contain" />
             <div className="text-left">
               <span className="text-white font-bold text-xs block">G2</span>
               <span className="text-slate-500 text-[11px]">High Performer Rating</span>

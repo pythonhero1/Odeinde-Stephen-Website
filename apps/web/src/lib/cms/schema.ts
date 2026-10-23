@@ -206,8 +206,8 @@ export type RevalidatePayload = z.infer<typeof RevalidatePayloadSchema>;
  * Standard WordPress REST Page schema for /wp/v2/pages
  */
 export const PageAcfSchema = z.object({
-  sections: z.array(z.record(z.any())).optional().default([]),
-}).optional().default({});
+  sections: z.array(z.record(z.any())).nullable().optional().transform((v) => v ?? []),
+});
 
 export const PageSchema = z.object({
   id: z.number().int().positive(),
@@ -222,7 +222,9 @@ export const PageSchema = z.object({
     rendered: z.string(),
   }).optional(),
   status: z.string().default("publish"),
-  acf: PageAcfSchema,
+  acf: z
+    .preprocess((val) => (val === null || val === undefined ? {} : val), PageAcfSchema)
+    .default({ sections: [] }),
 });
 
 export type Page = z.infer<typeof PageSchema>;

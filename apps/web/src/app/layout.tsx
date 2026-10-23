@@ -7,6 +7,7 @@ import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { AnalyticsProvider } from "@/components/analytics/AnalyticsProvider";
 import { CookieConsentBanner } from "@/components/analytics/CookieConsentBanner";
+import { DraftModeBanner } from "@/components/layout/DraftModeBanner";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -74,6 +75,7 @@ export default async function RootLayout({
           contactPhone={settings.contactPhone}
           contactLocation={settings.contactLocation}
         />
+        <DraftModeBanner />
         <CookieConsentBanner />
       </body>
     </html>

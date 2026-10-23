@@ -19,6 +19,8 @@ class OS_Headless_Revalidate {
         add_action('acf/save_post', [__CLASS__, 'on_acf_save_options'], 20);
         add_action('wp_update_nav_menu', [__CLASS__, 'on_menu_update'], 20);
         add_action('update_option_rank-math-options-titles', [__CLASS__, 'on_rank_math_options_update'], 20);
+        add_action('update_option_rank-math-options-general', [__CLASS__, 'on_rank_math_options_update'], 20);
+        add_action('update_option_rank-math-options-sitemap', [__CLASS__, 'on_rank_math_options_update'], 20);
     }
 
     /**
@@ -60,8 +62,15 @@ class OS_Headless_Revalidate {
             $old_path = self::get_public_path_for_slug($post_before->post_type, $post_before->post_name);
             $new_path = self::get_public_path_for_slug($post_after->post_type, $post_after->post_name);
 
+            $tags = ['cms-pages', 'cms-seo'];
+            if ($post_after->post_type === 'case-study') {
+                $tags[] = 'cms-case-studies';
+            } elseif ($post_after->post_type === 'post') {
+                $tags[] = 'cms-posts';
+            }
+
             self::dispatch_revalidation([
-                'tags'     => ['cms-pages', 'cms-seo'],
+                'tags'     => array_values(array_unique($tags)),
                 'paths'    => array_values(array_filter(['/', $old_path, $new_path])),
                 'postId'   => $post_id,
                 'slug'     => $post_after->post_name,
@@ -110,7 +119,7 @@ class OS_Headless_Revalidate {
     public static function on_menu_update() {
         self::dispatch_revalidation([
             'tags'  => ['cms-settings', 'cms-pages'],
-            'paths' => ['/'],
+            'paths' => ['/', '/case-studies', '/pricing', '/contact', '/portfolio', '/insights'],
         ]);
     }
 
@@ -157,6 +166,10 @@ class OS_Headless_Revalidate {
                 $tags[] = 'cms-case-studies';
                 $tags[] = 'cms-pages'; // case-studies archive page
                 $paths[] = '/case-studies';
+                $paths[] = '/portfolio';
+                $paths[] = '/business-website-solutions';
+                $paths[] = '/business-website-development';
+                $paths[] = '/e-commerce-development';
                 $paths[] = '/case-study/' . $post->post_name;
                 break;
 
@@ -164,6 +177,7 @@ class OS_Headless_Revalidate {
                 $tags[] = 'cms-posts';
                 $tags[] = 'cms-pages'; // blog archive page
                 $paths[] = '/insights';
+                $paths[] = '/business-website-development';
                 $paths[] = '/insights/' . $post->post_name;
                 break;
         }

@@ -107,6 +107,27 @@ class OS_Headless_Preview {
             return new WP_Error('not_found', __('Content not found', 'oderinde-headless'), ['status' => 404]);
         }
 
+        $acf_data = [];
+        if (function_exists('get_fields')) {
+            $acf_fields = get_fields($post->ID);
+            if (is_array($acf_fields)) {
+                $acf_data = $acf_fields;
+            }
+        }
+
+        // Fallback for case study meta fields if get_fields didn't provide them
+        if (empty($acf_data)) {
+            $acf_data = [
+                'business_focus'   => get_post_meta($post->ID, 'business_focus', true) ?: '',
+                'system_delivered' => get_post_meta($post->ID, 'system_delivered', true) ?: '',
+                'verified_outcome' => get_post_meta($post->ID, 'verified_outcome', true) ?: '',
+                'technology_1'     => get_post_meta($post->ID, 'technology_1', true) ?: '',
+                'technology_2'     => get_post_meta($post->ID, 'technology_2', true) ?: '',
+                'technology_3'     => get_post_meta($post->ID, 'technology_3', true) ?: '',
+                'color'            => get_post_meta($post->ID, 'color', true) ?: '2563eb',
+            ];
+        }
+
         return [
             'id'             => $post->ID,
             'slug'           => $post->post_name,
@@ -116,15 +137,7 @@ class OS_Headless_Preview {
             'excerpt'        => ['rendered' => get_the_excerpt($post)],
             'content'        => ['rendered' => apply_filters('the_content', $post->post_content)],
             'featured_media' => (int) get_post_thumbnail_id($post),
-            'acf'            => [
-                'business_focus'   => get_post_meta($post->ID, 'business_focus', true) ?: '',
-                'system_delivered' => get_post_meta($post->ID, 'system_delivered', true) ?: '',
-                'verified_outcome' => get_post_meta($post->ID, 'verified_outcome', true) ?: '',
-                'technology_1'     => get_post_meta($post->ID, 'technology_1', true) ?: '',
-                'technology_2'     => get_post_meta($post->ID, 'technology_2', true) ?: '',
-                'technology_3'     => get_post_meta($post->ID, 'technology_3', true) ?: '',
-                'color'            => get_post_meta($post->ID, 'color', true) ?: '2563eb',
-            ],
+            'acf'            => $acf_data,
         ];
     }
 

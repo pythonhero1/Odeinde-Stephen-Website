@@ -140,6 +140,7 @@ export function MobileNav({ items, bookingUrl, portalUrl }: MobileNavProps) {
                     <Link
                       key={item.path}
                       href={item.path}
+                      aria-current={isActive ? "page" : undefined}
                       className={`flex items-center justify-between px-4 py-3 rounded-lg text-base font-medium font-heading transition-colors min-h-[44px] ${
                         isActive
                           ? "bg-brand-surface text-white border border-brand-border/60"
