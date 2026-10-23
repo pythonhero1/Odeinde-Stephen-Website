@@ -1,6 +1,9 @@
 import type { MetadataRoute } from "next";
 
-const BASE_URL = process.env.NEXT_PUBLIC_SITE_ORIGIN || "https://oderindestephen.com";
+const BASE_URL =
+  process.env.SITE_URL ||
+  process.env.NEXT_PUBLIC_SITE_ORIGIN ||
+  "https://oderindestephen.com";
 
 export default function robots(): MetadataRoute.Robots {
   const isStaging =

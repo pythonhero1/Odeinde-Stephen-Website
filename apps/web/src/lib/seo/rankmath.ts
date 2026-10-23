@@ -3,7 +3,9 @@ import { getStaticFallbackSeo, DEFAULT_SITE_METADATA } from "./fallback-metadata
 import { ParsedSeoMetadataSchema } from "./schema.ts";
 
 const PUBLIC_ORIGIN =
-  process.env.NEXT_PUBLIC_SITE_ORIGIN || "https://oderindestephen.com";
+  process.env.SITE_URL ||
+  process.env.NEXT_PUBLIC_SITE_ORIGIN ||
+  "https://oderindestephen.com";
 const WP_API_ORIGIN =
   process.env.WP_API_ORIGIN || "http://localhost:10004";
 const CMS_MEDIA_ORIGIN =

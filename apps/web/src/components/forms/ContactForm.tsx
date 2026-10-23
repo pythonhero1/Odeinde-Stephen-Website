@@ -27,12 +27,47 @@ function ContactFormInner({ bookingUrl }: ContactFormProps) {
     timeline: TIMELINE_OPTIONS[0],
     message: "",
     honeypot: "",
+    turnstileToken: "",
   });
 
   const [clientKey, setClientKey] = useState("");
+  const [turnstileToken, setTurnstileToken] = useState("");
+  const turnstileSiteKey = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || "";
 
   useEffect(() => {
     setClientKey(`cl_${Date.now()}_${Math.random().toString(36).slice(2, 9)}`);
+
+    // Dynamically load Cloudflare Turnstile script if site key is configured
+    if (turnstileSiteKey && typeof window !== "undefined") {
+      const scriptId = "cf-turnstile-script";
+      if (!document.getElementById(scriptId)) {
+        const script = document.createElement("script");
+        script.id = scriptId;
+        script.src = "https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit";
+        script.async = true;
+        script.defer = true;
+        script.onload = () => {
+          if ((window as any).turnstile) {
+            (window as any).turnstile.render("#turnstile-widget", {
+              sitekey: turnstileSiteKey,
+              callback: (token: string) => setTurnstileToken(token),
+              "expired-callback": () => setTurnstileToken(""),
+            });
+          }
+        };
+        document.head.appendChild(script);
+      } else if ((window as any).turnstile) {
+        try {
+          (window as any).turnstile.render("#turnstile-widget", {
+            sitekey: turnstileSiteKey,
+            callback: (token: string) => setTurnstileToken(token),
+            "expired-callback": () => setTurnstileToken(""),
+          });
+        } catch {
+          // Widget already rendered
+        }
+      }
+    }
 
     const serviceParam = searchParams.get("service")?.toLowerCase();
     const interestParam = searchParams.get("interest")?.toLowerCase();
@@ -62,7 +97,7 @@ function ContactFormInner({ bookingUrl }: ContactFormProps) {
         message: initialMessage,
       };
     });
-  }, [searchParams]);
+  }, [searchParams, turnstileSiteKey]);
 
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
@@ -119,6 +154,10 @@ function ContactFormInner({ bookingUrl }: ContactFormProps) {
         body: JSON.stringify({
           ...result.data,
           submissionKey: clientKey || undefined,
+          turnstileToken:
+            turnstileToken ||
+            result.data.turnstileToken ||
+            (turnstileSiteKey.startsWith("1x00000000") ? "1x00000000000000000000AA" : undefined),
         }),
       });
 
@@ -402,6 +441,13 @@ function ContactFormInner({ bookingUrl }: ContactFormProps) {
           </p>
         )}
       </div>
+
+      {/* Cloudflare Turnstile Bot Protection Container */}
+      {turnstileSiteKey ? (
+        <div className="pt-2">
+          <div id="turnstile-widget" className="min-h-[65px]" />
+        </div>
+      ) : null}
 
       {/* Submit Action Button */}
       <div className="pt-2">

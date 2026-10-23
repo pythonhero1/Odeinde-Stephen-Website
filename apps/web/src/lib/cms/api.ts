@@ -14,7 +14,16 @@ import {
 import { CMS_CACHE_TAGS, DEFAULT_SITE_SETTINGS, getCmsFetchOptions } from "./cache.ts";
 import { fallbackCaseStudies, fallbackBlogPosts } from "./fixtures/seed-data.ts";
 
-const WP_API_ORIGIN = process.env.WP_API_ORIGIN || "http://localhost:10004";
+function getValidatedWpApiOrigin(): string {
+  const origin = process.env.WP_API_ORIGIN || "http://localhost:10004";
+  const env = process.env.ENVIRONMENT || process.env.NODE_ENV;
+  if ((env === "preview" || env === "production") && (origin.includes("localhost") || origin.includes(".local"))) {
+    console.warn(`[CMS API] CONFIG WARNING: Remote ${env} environment is configured with local origin '${origin}'. Remote preview and production must use an HTTPS CMS origin.`);
+  }
+  return origin;
+}
+
+const WP_API_ORIGIN = getValidatedWpApiOrigin();
 const CMS_BRIDGE_SECRET = process.env.CMS_BRIDGE_SECRET || "local-bridge-dev-secret-key-32chars";
 
 /**

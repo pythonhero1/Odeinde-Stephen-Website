@@ -1,25 +1,37 @@
-# Environment and secret handling
+# Environment and Secret Handling
 
-These variable names are proposed project configuration, not existing live values. Finalize them in the approved CMS contract phase.
+Environment variable specifications across Local development, Remote Preview (Phase 08), and Production (Phase 09).
 
-| Variable | Visibility | Meaning |
-| --- | --- | --- |
-| `SITE_URL` | Server | Canonical public origin, eventually `https://oderindestephen.com`. |
-| `APP_ORIGIN` | Server | Actual local/preview/production app origin for callback validation. A preview origin is not the canonical public origin. |
-| `WP_API_ORIGIN` | Server | Local or remote CMS origin. Remote preview must not use a `.local` hostname. |
-| `WP_PREVIEW_USER` | Server | Dedicated WordPress preview user, with only needed read capabilities. |
-| `WP_PREVIEW_APPLICATION_PASSWORD` | Server secret | Application password for authenticated draft reads over HTTPS. Not an administrator's normal password. |
-| `PREVIEW_SIGNING_SECRET` | Server secret, shared with CMS plugin | Signs preview tokens scoped to content and short expiry. |
-| `REVALIDATION_SECRET` | Server secret, shared with CMS plugin | Authenticates publish/content invalidation events. |
-| `CMS_BRIDGE_SECRET` | Server secret, shared with CMS plugin | Signs server-to-server enquiry requests with replay protection. |
-| `TURNSTILE_SECRET_KEY` | Server secret | Verifies public form tokens with Cloudflare. |
-| `NEXT_PUBLIC_TURNSTILE_SITE_KEY` | Public | Widget site key. Configure allowed local and real hostnames. |
-| `NEXT_PUBLIC_GA_MEASUREMENT_ID` | Public, optional | Approved frontend analytics property; load in line with reviewed consent behavior. |
+## 1. Complete 3-Tier Variable & Secret Matrix
 
-The booking URL, contact destinations, navigation and public business identity are CMS settings. Keep a single source of truth rather than adding competing copies in environment files.
+| Variable | Scope | Local (`.env.local`) | Remote Preview (`preview.oderindestephen.com`) | Production (`oderindestephen.com`) | Purpose |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| `SITE_URL` | Server | `http://localhost:3000` | `https://preview.oderindestephen.com` | `https://oderindestephen.com` | Canonical public origin |
+| `APP_ORIGIN` | Server | `http://localhost:3000` | `https://preview.oderindestephen.com` | `https://oderindestephen.com` | App runtime origin for callbacks/redirects |
+| `WP_API_ORIGIN` | Server | `http://localhost:10004` | `https://cms.oderindestephen.com` | `https://cms.oderindestephen.com` | WordPress REST API endpoint (Strict HTTPS) |
+| `CMS_MEDIA_ORIGIN` | Server | `http://localhost:10004` | `https://cms.oderindestephen.com` | `https://cms.oderindestephen.com` | Target for `/wp-content/uploads/` 301 redirects |
+| `WP_PREVIEW_USER` | Server | `headless_preview` | `headless_preview` | `headless_preview` | Read-only WordPress preview user |
+| `WP_PREVIEW_APPLICATION_PASSWORD` | **Server Secret** | `(local dev password)` | **Cloudflare Encrypted Secret** | **Cloudflare Encrypted Secret** | WordPress Application Password for draft reads |
+| `PREVIEW_SIGNING_SECRET` | **Server Secret** | `(32-char dev string)` | **Cloudflare Encrypted Secret** (64 hex) | **Cloudflare Encrypted Secret** (64 hex) | Signs preview tokens (matches `OS_PREVIEW_SECRET`) |
+| `REVALIDATION_SECRET` | **Server Secret** | `(32-char dev string)` | **Cloudflare Encrypted Secret** (64 hex) | **Cloudflare Encrypted Secret** (64 hex) | Authenticates publish webhooks (matches `OS_REVALIDATION_SECRET`) |
+| `CMS_BRIDGE_SECRET` | **Server Secret** | `(32-char dev string)` | **Cloudflare Encrypted Secret** (64 hex) | **Cloudflare Encrypted Secret** (64 hex) | Signs enquiry relay payloads (matches `CMS_BRIDGE_SECRET`) |
+| `TURNSTILE_SECRET_KEY` | **Server Secret** | `1x0000000000000000000000000000000AA` | **Cloudflare Encrypted Secret** | **Cloudflare Encrypted Secret** | Verifies form tokens with Cloudflare Turnstile |
+| `NEXT_PUBLIC_TURNSTILE_SITE_KEY` | Browser Public | `1x00000000000000000000AA` | Preview Turnstile Site Key | Production Turnstile Site Key | Client-side widget site key |
+| `NEXT_PUBLIC_GA_MEASUREMENT_ID` | Browser Public | `(empty)` | `(empty or staging ID)` | `G-XXXXXXXXXX` (if approved) | Optional Google Analytics stream |
+| `ENVIRONMENT` | Server | `development` | `preview` | `production` | Enforces `robots.ts` disallow on preview |
+| `NODE_VERSION` | Build Only | `v24.20.0` | `20.18.0` | `20.18.0` | Node.js container version for Cloudflare Pages build |
 
-Local values belong in the frontend's ignored local environment file. Hosting values belong in the correct provider environment scope. CMS shared secrets belong in server configuration or secured plugin settings excluded from its public settings endpoint. Add a names-only `.env.example` during approved setup, with blank secrets and documented examples for nonsecret origins. Do not include live values in plans or screenshots.
+## 2. Rules and Security Boundaries
 
-Never print secret-bearing environment files to chat, commit them, expose them with a `NEXT_PUBLIC_` prefix or forward WordPress credentials to the browser. Rotate exposed credentials. Restrict server fetches to the configured CMS origin and validate paths to avoid arbitrary outbound requests.
-
-Separate public production cache from preview/private requests. Do not put secret values in invalidation cache keys, analytics events, URLs or client source maps. A signed, expiring preview token may appear in a CMS-generated preview URL; the signing secret and application password must never appear there.
+1. The booking URL (`https://cal.com/oderinde/free`), contact destinations, navigation and public business identity are CMS settings. Keep a single source of truth rather than adding competing copies in environment files.
+2. Local values belong in the frontend's ignored `.env.local` file.
+3. Hosting values belong in the Cloudflare Pages environment variables and encrypted secrets settings.
+4. CMS shared secrets belong in `wp-config.php` on the remote server:
+   ```php
+   define('OS_FRONTEND_ORIGIN', 'https://preview.oderindestephen.com');
+   define('OS_PREVIEW_SECRET', '<GENERATED_64_CHAR_HEX>');
+   define('OS_REVALIDATION_SECRET', '<GENERATED_64_CHAR_HEX>');
+   define('CMS_BRIDGE_SECRET', '<GENERATED_64_CHAR_HEX>');
+   ```
+5. Never print secret-bearing environment files to chat, commit them, expose them with a `NEXT_PUBLIC_` prefix, or forward WordPress credentials to the browser.
+6. Separate public production cache from preview/private requests. Do not put secret values in invalidation cache keys, analytics events, URLs, or client source maps.

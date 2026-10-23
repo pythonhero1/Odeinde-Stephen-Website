@@ -115,6 +115,14 @@ class OS_Headless_Preview {
             }
         }
 
+        // For page post types, ensure sections array exists
+        if ($post->post_type === 'page') {
+            if (!isset($acf_data['sections'])) {
+                $meta_sections = get_post_meta($post->ID, 'sections', true);
+                $acf_data['sections'] = is_array($meta_sections) ? $meta_sections : [];
+            }
+        }
+
         // Fallback for case study meta fields if get_fields didn't provide them
         if (empty($acf_data)) {
             $acf_data = [
