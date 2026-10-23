@@ -1,0 +1,111 @@
+{
+  "key": "group_page_sections",
+  "title": "Page Sections",
+  "fields": [
+    {
+      "key": "field_page_sections",
+      "label": "Flexible Page Sections",
+      "name": "sections",
+      "type": "flexible_content",
+      "instructions": "Add and reorder approved page sections.",
+      "button_label": "Add Section",
+      "layouts": {
+        "layout_hero": {
+          "key": "layout_hero",
+          "name": "hero",
+          "label": "Hero Section",
+          "display": "block",
+          "sub_fields": [
+            { "key": "field_hero_badge", "label": "Badge Text", "name": "badge", "type": "text" },
+            { "key": "field_hero_headline", "label": "Headline", "name": "headline", "type": "text", "required": 1 },
+            { "key": "field_hero_highlight", "label": "Highlighted Headline Text", "name": "headline_highlight", "type": "text" },
+            { "key": "field_hero_subheadline", "label": "Subheadline", "name": "subheadline", "type": "textarea" },
+            { "key": "field_hero_cta_primary", "label": "Primary CTA Label", "name": "cta_primary_label", "type": "text" },
+            { "key": "field_hero_cta_primary_url", "label": "Primary CTA URL", "name": "cta_primary_url", "type": "text" },
+            { "key": "field_hero_cta_secondary", "label": "Secondary CTA Label", "name": "cta_secondary_label", "type": "text" },
+            { "key": "field_hero_cta_secondary_url", "label": "Secondary CTA URL", "name": "cta_secondary_url", "type": "text" }
+          ]
+        },
+        "layout_services": {
+          "key": "layout_services",
+          "name": "services_grid",
+          "label": "Services Cards",
+          "display": "block",
+          "sub_fields": [
+            { "key": "field_services_title", "label": "Section Title", "name": "title", "type": "text" },
+            { "key": "field_services_subtitle", "label": "Subtitle", "name": "subtitle", "type": "textarea" },
+            {
+              "key": "field_services_items",
+              "label": "Service Cards",
+              "name": "items",
+              "type": "repeater",
+              "sub_fields": [
+                { "key": "field_service_title", "label": "Card Title", "name": "title", "type": "text", "required": 1 },
+                { "key": "field_service_desc", "label": "Description", "name": "description", "type": "textarea" },
+                { "key": "field_service_link", "label": "Link URL", "name": "link_url", "type": "text" }
+              ]
+            }
+          ]
+        },
+        "layout_case_studies": {
+          "key": "layout_case_studies",
+          "name": "case_studies_grid",
+          "label": "Featured Case Studies",
+          "display": "block",
+          "sub_fields": [
+            { "key": "field_cs_title", "label": "Section Title", "name": "title", "type": "text" },
+            { "key": "field_cs_subtitle", "label": "Subtitle", "name": "subtitle", "type": "textarea" },
+            { "key": "field_cs_limit", "label": "Number of items", "name": "limit", "type": "number", "default_value": 6 }
+          ]
+        },
+        "layout_faq": {
+          "key": "layout_faq",
+          "name": "faq_section",
+          "label": "FAQ Accordion",
+          "display": "block",
+          "sub_fields": [
+            { "key": "field_faq_title", "label": "Title", "name": "title", "type": "text" },
+            {
+              "key": "field_faq_items",
+              "label": "Questions & Answers",
+              "name": "items",
+              "type": "repeater",
+              "sub_fields": [
+                { "key": "field_faq_q", "label": "Question", "name": "question", "type": "text", "required": 1 },
+                { "key": "field_faq_a", "label": "Answer", "name": "answer", "type": "textarea", "required": 1 }
+              ]
+            }
+          ]
+        },
+        "layout_closing_cta": {
+          "key": "layout_closing_cta",
+          "name": "closing_cta",
+          "label": "Closing Call to Action",
+          "display": "block",
+          "sub_fields": [
+            { "key": "field_ccta_title", "label": "Title", "name": "title", "type": "text" },
+            { "key": "field_ccta_desc", "label": "Description", "name": "description", "type": "textarea" },
+            { "key": "field_ccta_button", "label": "Button Label", "name": "button_label", "type": "text" },
+            { "key": "field_ccta_url", "label": "Button URL", "name": "button_url", "type": "text" }
+          ]
+        }
+      }
+    }
+  ],
+  "location": [
+    [
+      {
+        "param": "post_type",
+        "operator": "==",
+        "value": "page"
+      }
+    ]
+  ],
+  "menu_order": 0,
+  "position": "normal",
+  "style": "default",
+  "label_placement": "top",
+  "active": true,
+  "show_in_rest": 1,
+  "modified": 1729606787
+}

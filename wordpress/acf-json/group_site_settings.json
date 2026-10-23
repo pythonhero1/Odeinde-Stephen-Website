@@ -1,0 +1,176 @@
+{
+  "key": "group_site_settings",
+  "title": "Site Settings",
+  "fields": [
+    {
+      "key": "field_site_tagline",
+      "label": "Site Tagline",
+      "name": "site_tagline",
+      "type": "text",
+      "default_value": "Website Development & Digital Solutions",
+      "instructions": "Public tagline displayed in header/metadata."
+    },
+    {
+      "key": "field_booking_url",
+      "label": "Booking URL (Cal.com)",
+      "name": "booking_url",
+      "type": "url",
+      "default_value": "https://cal.com/oderinde/free",
+      "required": 1,
+      "instructions": "Shared Cal.com strategy booking link per D-6."
+    },
+    {
+      "key": "field_contact_email",
+      "label": "Contact Inbox Email",
+      "name": "contact_email",
+      "type": "email",
+      "default_value": "Contact@oderindestephen.com",
+      "required": 1,
+      "instructions": "Verified recipient mailbox for contact enquiries per D-10."
+    },
+    {
+      "key": "field_currency",
+      "label": "Standard Currency",
+      "name": "currency",
+      "type": "select",
+      "choices": {
+        "GBP": "GBP (£)",
+        "USD": "USD ($)",
+        "EUR": "EUR (€)"
+      },
+      "default_value": "GBP",
+      "required": 1,
+      "instructions": "Standard currency policy across pricing & enquiries per D-8."
+    },
+    {
+      "key": "field_portal_url",
+      "label": "Client Portal URL",
+      "name": "portal_url",
+      "type": "url",
+      "default_value": "https://portal.oderindestephen.com/",
+      "instructions": "External client portal application link."
+    },
+    {
+      "key": "field_social_links",
+      "label": "Social Profiles",
+      "name": "social_links",
+      "type": "group",
+      "sub_fields": [
+        {
+          "key": "field_social_linkedin",
+          "label": "LinkedIn Profile",
+          "name": "linkedin",
+          "type": "url",
+          "default_value": "https://www.linkedin.com/in/pythonhero/"
+        },
+        {
+          "key": "field_social_clutch",
+          "label": "Clutch Profile",
+          "name": "clutch",
+          "type": "url",
+          "default_value": "https://clutch.co/profile/oderinde-stephen"
+        },
+        {
+          "key": "field_social_trustpilot",
+          "label": "Trustpilot Profile",
+          "name": "trustpilot",
+          "type": "url",
+          "default_value": "https://www.trustpilot.com/review/oderindestephen.com"
+        },
+        {
+          "key": "field_social_google_business",
+          "label": "Google Business Profile",
+          "name": "google_business",
+          "type": "url",
+          "default_value": "https://share.google/vDGgZ0FrAHvVTa31h"
+        }
+      ]
+    },
+    {
+      "key": "field_navigation_header",
+      "label": "Header Navigation",
+      "name": "navigation_header",
+      "type": "repeater",
+      "layout": "table",
+      "button_label": "Add Nav Item",
+      "sub_fields": [
+        {
+          "key": "field_nav_label",
+          "label": "Label",
+          "name": "label",
+          "type": "text",
+          "required": 1
+        },
+        {
+          "key": "field_nav_path",
+          "label": "Path or URL",
+          "name": "path",
+          "type": "text",
+          "required": 1
+        },
+        {
+          "key": "field_nav_external",
+          "label": "Is External",
+          "name": "is_external",
+          "type": "true_false",
+          "default_value": 0
+        },
+        {
+          "key": "field_nav_cta",
+          "label": "Is CTA Button",
+          "name": "is_cta",
+          "type": "true_false",
+          "default_value": 0
+        }
+      ]
+    },
+    {
+      "key": "field_footer_copyright",
+      "label": "Footer Copyright Text",
+      "name": "copyright_text",
+      "type": "text",
+      "default_value": "© 2026 Oderinde Stephen. All rights reserved."
+    },
+    {
+      "key": "field_legal_links",
+      "label": "Legal Links",
+      "name": "legal_links",
+      "type": "repeater",
+      "layout": "table",
+      "button_label": "Add Legal Link",
+      "sub_fields": [
+        {
+          "key": "field_legal_label",
+          "label": "Label",
+          "name": "label",
+          "type": "text",
+          "required": 1
+        },
+        {
+          "key": "field_legal_path",
+          "label": "Path",
+          "name": "path",
+          "type": "text",
+          "required": 1
+        }
+      ]
+    }
+  ],
+  "location": [
+    [
+      {
+        "param": "options_page",
+        "operator": "==",
+        "value": "oderinde-site-settings"
+      }
+    ]
+  ],
+  "menu_order": 0,
+  "position": "normal",
+  "style": "default",
+  "label_placement": "top",
+  "instruction_placement": "label",
+  "active": true,
+  "show_in_rest": 1,
+  "modified": 1729606787
+}

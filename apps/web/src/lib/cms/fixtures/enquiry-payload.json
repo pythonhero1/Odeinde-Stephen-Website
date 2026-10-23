@@ -1,0 +1,11 @@
+{
+  "name": "Jane Smith",
+  "email": "jane@example.com",
+  "service": "Ecommerce Development",
+  "message": "We need a headless Shopify/WordPress storefront.",
+  "company": "Acme Corp",
+  "website": "https://example.com",
+  "budget": "GBP 3000+",
+  "timeline": "2 months",
+  "submissionKey": "uuid-9988-7766-5544"
+}
